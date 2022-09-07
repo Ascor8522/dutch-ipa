@@ -39,3 +39,7 @@ export const redisSet = (values: Record<string, string | typeof IPANotCouldNotSc
 	}))
 	.then(entries => entries.length ? redis.mset(...entries) : null)
 	.then();
+
+export const redisFlush = (): Promise<void> => redis
+	.flushdb()
+	.then();

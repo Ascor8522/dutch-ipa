@@ -77,6 +77,11 @@ html > body > div.app section.card {
   padding: 1.5rem;
   border-radius: 0.5rem;
 }
+@media screen and (max-width: 600px) {
+  html > body > div.app section.card {
+    border-radius: 0;
+  }
+}
 html > body > div.app section.card nav {
   display: flex;
   flex-direction: row;

@@ -9,6 +9,9 @@
 		box-shadow: var(--card-shadow) 0px 0px 20px 0px;
 		padding: 1.5rem;
 		border-radius: 0.5rem;
+		@include mobile.onMobile {
+			border-radius: 0;
+		};
 		nav {
 			display: flex;
 			flex-direction: row;
