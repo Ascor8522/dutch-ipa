@@ -1,21 +1,23 @@
 /** @jsx h */
 
-import { tw } from "@twind";
 import { h } from "preact";
-import { useState } from "preact/hooks";
 
-import { Card, CardProps } from "../components/Card.tsx";
+import { Card, CardProps, Clearable, Copyable, Pronounceable, Swappable } from "../components/Card.tsx";
 
-export default ({ copy, clear, pronounce, swap }: InputProps) => {
+export default ({ onCopy, onClear, onPronounce, onSwap, onTextChange }: InputProps) => {
 	return (
 		<Card
 			title="Input"
-			allowCopy copy={copy}
-			allowClear clear={clear}
-			allowPronounce pronounce={pronounce}
-			allowSwap swap={swap}
+			cannotBeDisabled
+			onTextChange={onTextChange}
+			allowCopy onCopy={onCopy}
+			allowClear onClear={onClear}
+			allowPronounce onPronounce={onPronounce}
+			allowSwap onSwap={onSwap}
 		/>
 	);
 };
 
-type InputProps = Pick<CardProps, "copy" | "clear" | "pronounce" | "swap">;
+interface InputProps extends CardProps, Copyable, Clearable, Pronounceable, Swappable {
+
+}

@@ -1,19 +1,23 @@
 /** @jsx h */
 
-import { tw } from "@twind";
 import { h } from "preact";
-import { useState } from "preact/hooks";
 
-import { Card, CardProps } from "../components/Card.tsx";
+import { Card, CardProps, Copyable } from "../components/Card.tsx";
 
-export default ({ copy }: IPAProp) => {
+export default ({ text, isError, isLoading, isClosed, onCopy }: IPAProp) => {
 	return (
 		<Card
 			title="IPA"
-			readonly
-			allowCopy copy={copy}
-			/>
+			text={text}
+			isError={isError}
+			isLoading={isLoading}
+			isClosed={isClosed}
+			isReadonly
+			allowCopy onCopy={onCopy}
+		/>
 	);
 };
 
-type IPAProp = Pick<CardProps, "copy">;
+interface IPAProp extends CardProps, Copyable {
+
+}

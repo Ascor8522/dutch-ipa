@@ -1,0 +1,156 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap");
+:root {
+  --one: #16161d;
+  --two: #28283e;
+  --three: #3785b9;
+  --four: #eeeeee;
+  --five: #8d94a3;
+}
+@media screen and (prefers-color-scheme: dark) {
+  :root {
+    --background-color: var(--one);
+    --text-color: var(--four);
+    --toggle-button-enabled-background-color: var(--three);
+    --toggle-button-disabled-background-color: var(--two);
+    --toggle-button-slider-color: var(--four);
+    --button-color: var(--two);
+    --button-hover-color: var(--three);
+    --card-text-input-color: rgba(0, 0, 0, 0.1254901961);
+    --loading-skeleton-color: rgba(26, 26, 26, 0.1254901961);
+    --loading-skeleton-color-lighter: rgba(77, 77, 77, 0.1254901961);
+  }
+}
+@media screen and (prefers-color-scheme: light) {
+  :root {
+    --background-color: var(--four);
+    --text-color: var(--one);
+    --toggle-button-enabled-background-color: var(--three);
+    --toggle-button-disabled-background-color: var(--five);
+    --toggle-button-slider-color: var(--four);
+    --button-color: var(--five);
+    --button-hover-color: var(--three);
+    --card-text-input-color: rgba(0, 0, 0, 0.1254901961);
+    --loading-skeleton-color: rgba(0, 0, 0, 0.1254901961);
+    --loading-skeleton-color-lighter: rgba(0, 0, 0, 0.1254901961);
+  }
+}
+
+html {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+html > body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto", sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+html > body > div.app {
+  width: 80%;
+  height: 100%;
+  margin: auto;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  justify-content: space-evenly;
+}
+html > body > div.app section.card {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  box-shadow: black 0px 0px 20px 0px;
+  padding: 1.5rem;
+}
+html > body > div.app section.card nav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}
+html > body > div.app section.card nav label.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 3rem;
+  height: 1.5rem;
+}
+html > body > div.app section.card nav label.toggle-switch:not(.disabled) {
+  cursor: pointer;
+}
+html > body > div.app section.card nav label.toggle-switch.disabled > input + span {
+  filter: brightness(0.7) grayscale(0.8) contrast(0.8);
+}
+html > body > div.app section.card nav label.toggle-switch > input {
+  display: none;
+}
+html > body > div.app section.card nav label.toggle-switch > input:checked + span {
+  background-color: var(--toggle-button-enabled-background-color);
+}
+html > body > div.app section.card nav label.toggle-switch > input:checked + span:before {
+  transform: translateX(1.5rem);
+}
+html > body > div.app section.card nav label.toggle-switch > span {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--toggle-button-disabled-background-color);
+  transition: 0.4s;
+  border-radius: 999px;
+}
+html > body > div.app section.card nav label.toggle-switch > span:before {
+  position: absolute;
+  content: "";
+  height: 1rem;
+  width: 1rem;
+  left: 0.25rem;
+  bottom: 0.25rem;
+  background-color: var(--toggle-button-slider-color);
+  transition: 0.4s;
+  border-radius: 999px;
+}
+html > body > div.app section.card nav h2 {
+  margin: 0;
+}
+html > body > div.app section.card nav button {
+  cursor: pointer;
+  background-color: var(--button-color);
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.25rem;
+}
+html > body > div.app section.card nav button:hover {
+  background-color: var(--button-hover-color);
+}
+html > body > div.app section.card nav button > img {
+  filter: invert(1);
+  width: 1.5rem;
+  height: auto;
+}
+html > body > div.app section.card nav:nth-of-type(2) {
+  justify-content: end;
+}
+html > body > div.app section.card div {
+  padding: 1rem;
+  background-color: var(--card-text-input-color);
+  border-radius: 0.5rem;
+}
+.is-loading {
+  background: linear-gradient(110deg, var(--loading-skeleton-color) 8%, var(--loading-skeleton-color-lighter) 18%, var(--loading-skeleton-color) 33%);
+  background-size: 200% 100%;
+  animation: 1.5s shine linear infinite;
+}
+
+@keyframes shine {
+  to {
+    background-position-x: -200%;
+  }
+}
+
+/*# sourceMappingURL=style.css.map */

@@ -13,7 +13,7 @@ export const redis = await connect({
 export const redisGet = (keys: string[]): Promise<Record<string, string | null>> => Promise
 	.resolve(keys)
 	.then(getUnique)
-	.then(keys => Promise.all([keys.length ? redis.mget(...keys) : [], keys]))
+	.then(keys => Promise.all([keys.length ? redis.mget(...keys).then(res => res.map(s => s?.toString() ?? null)) : [] as string[], keys]))
 	.then(([res, keys]) => zip(keys, res))
 	.then(Object.fromEntries);
 

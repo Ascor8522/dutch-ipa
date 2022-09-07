@@ -1,22 +1,24 @@
-import { zip } from "../../utils/array.ts";
+import { domParser } from "../../main.ts";
 
 export abstract class DutchIPAService {
-	public static getIPAs = (words: string[]): Promise<Record<string, string | null>> => Promise
-		.all([
-			words,
-			Promise
-				.allSettled(words
-					.map(DutchIPAService.getIPA))
-				.then(results => results.map(result => result.status === "fulfilled" ? result.value : null)),
-		])
-		.then(([words, results]) => zip(words, results))
-		.then(Object.fromEntries);
-
 	public static getIPA = (word: string): Promise<string | null> =>
-		fetch(`https://www.woorden.org/woord/${word}`)
+		fetch(`https://www.woorden.org/woord/${word}`) // &from= in case of a plural // &noredirect=1 in case of a redirect
 			.then(response => {
 				if(!response.ok) throw new Error(response.statusText);
 				return response.text();
 			})
-			.then(text => "" as string | null);
+			.then(text => domParser.parseFromString(text, "text/html"))
+			.then(document => {
+				if(!document) {
+					console.error(`No document for word ${word}`);
+					throw new Error("No document");
+				}
+				return document;
+			})
+			.then(document => document
+				.querySelector("table")
+				?.innerText
+				?.match(/Uitspraak:\s+\t?\[(.*?)\]/)
+				?.[1]
+				?? null);
 }

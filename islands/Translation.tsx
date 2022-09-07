@@ -1,21 +1,25 @@
 /** @jsx h */
 
-import { tw } from "@twind";
 import { h } from "preact";
-import { useState } from "preact/hooks";
 
-import { Card, CardProps } from "../components/Card.tsx";
+import { Card, CardProps, Copyable, Pronounceable, Swappable } from "../components/Card.tsx";
 
-export default ({ copy, pronounce, swap }: TranslationProps) => {
+export default ({ text, isError, isLoading, onCopy, onPronounce, onSwap }: TranslationProps) => {
 	return (
 		<Card
 			title="Translation"
-			readonly
-			allowCopy copy={copy}
-			allowPronounce pronounce={pronounce}
-			allowSwap swap={swap}
+			text={text}
+			isError={isError}
+			isLoading={true}
+			isReadonly
+			isClosed
+			allowCopy onCopy={onCopy}
+			allowPronounce onPronounce={onPronounce}
+			allowSwap onSwap={onSwap}
 		/>
 	);
 };
 
-type TranslationProps = Pick<CardProps, "copy" | "pronounce" | "swap">;
+interface TranslationProps extends CardProps, Copyable, Pronounceable, Swappable {
+
+}
