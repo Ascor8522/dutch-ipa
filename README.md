@@ -1,4 +1,6 @@
-# fresh project
+# Dutch-ipa
+
+A website that shows you the IPA transcription of a Dutch sentence.
 
 ### Usage
 

@@ -1,7 +1,8 @@
-import { domParser } from "../../main.ts";
+import { domParser } from "../../../main.ts";
+import { IPANotCouldNotScrape } from "../index.ts";
 
 export abstract class DutchIPAService {
-	public static getIPA = (word: string): Promise<string | null> =>
+	public static getIPA = (word: string): Promise<string | typeof IPANotCouldNotScrape> =>
 		fetch(`https://www.woorden.org/woord/${word}`) // &from= in case of a plural // &noredirect=1 in case of a redirect
 			.then(response => {
 				if(!response.ok) throw new Error(response.statusText);
@@ -9,16 +10,13 @@ export abstract class DutchIPAService {
 			})
 			.then(text => domParser.parseFromString(text, "text/html"))
 			.then(document => {
-				if(!document) {
-					console.error(`No document for word ${word}`);
-					throw new Error("No document");
-				}
+				if(!document) console.error(`No document for word ${word}`);
 				return document;
 			})
 			.then(document => document
-				.querySelector("table")
+				?.querySelector("table")
 				?.innerText
 				?.match(/Uitspraak:\s+\t?\[(.*?)\]/)
 				?.[1]
-				?? null);
+				?? IPANotCouldNotScrape);
 }

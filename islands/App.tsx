@@ -1,11 +1,13 @@
 /** @jsx h */
 
+import "preact/debug";
+
 import { h } from "preact";
 import { useEffect, useState } from "preact/hooks";
 
-import Input from "../islands/Input.tsx";
-import IPA from "../islands/IPA.tsx";
-import Translation from "../islands/Translation.tsx";
+import Input from "../components/Input.tsx";
+import IPA from "../components/IPA.tsx";
+import Translation from "../components/Translation.tsx";
 import { debounce } from "../utils/function.ts";
 
 export default () => {
@@ -13,27 +15,41 @@ export default () => {
 	const [ipa, setIPA] = useState("");
 	const [translation, setTranslation] = useState("");
 
-	useEffect(() => {
-		fetch("/api/ipa", { method: "POST", body: input })
-			.then((res) => res.json())
-			.then((res) => {
-				setIPA(JSON.stringify(res));
-				setTranslation(JSON.stringify(res));
-			});
-	}, [input]);
+	const getIPA = (text: string) => fetch("/api", {
+		method: "POST",
+		body: JSON.stringify({
+			input: {
+				lang: "nl",
+				text,
+			},
+			ipa: true,
+		}),
+	})
+		.then(res => res.json() as Promise<{ ipa: (string | null)[], translation?: string; }>)
+		.then(({ ipa, translation }) => {
+			setIPA(ipa.map(word => word ?? "🤔").join(" "));
+			setTranslation(translation ?? "");
+		});
 
 	const isError = false;
 	const isLoading = false;
 
-	const onCopy = async (text: string) => await navigator.clipboard.writeText(text);
+	const onCopy = (text: string) =>
+		navigator.clipboard.writeText(text)
+			.then(() => alert("Copied!"))
+			.catch(() => alert("Failed to copy!"));
 	const onPronounce = () => { };
-	const onSwap = () => { };
-	const onClear = () => { };
-	const onTextChange = debounce(setInput, 1000);
+	const onSwap = () => {
+		const tmp = input;
+		setInput(translation);
+		setTranslation(tmp);
+	};
+	const onClear = () => setInput("");
+	const onTextChange = debounce(getIPA, 1000);
 
 	return (
 		<div class="app">
-			<Input isError={isError} isLoading={isLoading} onCopy={onCopy} onPronounce={onPronounce} onSwap={onSwap} onClear={onClear} onTextChange={onTextChange} />
+			<Input isError={isError} isLoading={isLoading} onCopy={onCopy} onPronounce={onPronounce} onSwap={onSwap} onClear={onClear} onTextChange={onTextChange} text={input} />
 			<IPA isError={isError} isLoading={isLoading} text={ipa} onCopy={onCopy} />
 			<Translation isError={isError} isLoading={isLoading} text={translation} onCopy={onCopy} onPronounce={onPronounce} onSwap={onSwap} />
 		</div>

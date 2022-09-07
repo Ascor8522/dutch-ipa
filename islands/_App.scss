@@ -1,4 +1,5 @@
-@use "../components/Card";
+@use "./Card";
+@use "../static/scss/utils/mobile";
 
 @mixin App() {
 	width: 80%;
@@ -8,6 +9,13 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	justify-content: space-evenly;
+	gap: 5rem;
+
+	@include mobile.onMobile {
+		width: 100%;
+		justify-content: center;
+		gap: 1rem;
+	};
+
 	@include Card.Card();
 }

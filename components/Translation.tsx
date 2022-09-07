@@ -2,7 +2,7 @@
 
 import { h } from "preact";
 
-import { Card, CardProps, Copyable, Pronounceable, Swappable } from "../components/Card.tsx";
+import Card, { CardProps, Copyable, Pronounceable, Swappable } from "../islands/Card.tsx";
 
 export default ({ text, isError, isLoading, onCopy, onPronounce, onSwap }: TranslationProps) => {
 	return (

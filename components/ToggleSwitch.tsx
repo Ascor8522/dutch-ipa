@@ -2,10 +2,12 @@
 
 import classnames from "classnames";
 import { h } from "preact";
-import { useRef } from "preact/hooks";
+import { useEffect, useRef } from "preact/hooks";
 
-export const ToggleSwitch = ({ isDisabled, isChecked, onCheckChanged }: ToggleSwitchProps) => {
+export default ({ isDisabled, isChecked, onCheckChanged }: ToggleSwitchProps) => {
 	const input = useRef<HTMLInputElement>(null);
+
+	useEffect(() => {}, [isChecked]);
 
 	return (
 		<label class={classnames("toggle-switch", { "disabled": isDisabled })}>

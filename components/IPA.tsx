@@ -2,7 +2,7 @@
 
 import { h } from "preact";
 
-import { Card, CardProps, Copyable } from "../components/Card.tsx";
+import Card, { CardProps, Copyable } from "../islands/Card.tsx";
 
 export default ({ text, isError, isLoading, isClosed, onCopy }: IPAProp) => {
 	return (

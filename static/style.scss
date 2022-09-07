@@ -24,6 +24,7 @@ $cardTextInputColor: #00000020;
 		--card-text-input-color: #{$cardTextInputColor};
 		--loading-skeleton-color: #{lighten($cardTextInputColor, 10%)};
 		--loading-skeleton-color-lighter: #{lighten($cardTextInputColor, 30%)};
+		--card-shadow: #000000;
 	}
 
 	@media screen and (prefers-color-scheme: light) {
@@ -37,6 +38,7 @@ $cardTextInputColor: #00000020;
 		--card-text-input-color: #{$cardTextInputColor};
 		--loading-skeleton-color: #{darken($cardTextInputColor, 10%)};
 		--loading-skeleton-color-lighter: #{darken($cardTextInputColor, 30%)};
+		--card-shadow: #00000080;
 	}
 }
 
