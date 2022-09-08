@@ -7,7 +7,7 @@ import { useEffect, useRef } from "preact/hooks";
 export default ({ isDisabled, isChecked, onCheckChanged }: ToggleSwitchProps) => {
 	const input = useRef<HTMLInputElement>(null);
 
-	useEffect(() => {}, [isChecked]);
+	useEffect(() => { }, [isChecked]);
 
 	return (
 		<label class={classnames("toggle-switch", { "disabled": isDisabled })}>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://dutch-ipa.deno.dev/sitemap.xml

@@ -6,7 +6,7 @@ import { DutchIPAService } from "./lang/dutch.ts";
 
 export const IPANotInDB: unique symbol = Symbol("IPA_NO_IN_DB");
 export const IPAAlreadyInDBButNull: unique symbol = Symbol("IPA_ALREADY_IN_DB_BUT_NULL");
-export const IPANotCouldNotScrape: unique symbol = Symbol("IPA_NOT_COULD_NOT_SCRAPE");
+export const IPANotCouldNotScrape: unique symbol = Symbol("IPA_COULD_NOT_SCRAPE");
 
 export const getIPAs = async (sentence: string, lang: InputLanguages): Promise<{ ipa: (string | null)[]; }> => {
 	const words = sentenceToWords(sentence);

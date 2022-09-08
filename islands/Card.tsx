@@ -55,7 +55,7 @@ export default ({
 									.map(([allow, func, title, icon]) => (
 										allow && (
 											<button onClick={func} title={title}>
-												<img src={icon} alt={title} />
+												<img src={icon} alt={title} width="24px" height="24px" />
 											</button>
 										)
 									))

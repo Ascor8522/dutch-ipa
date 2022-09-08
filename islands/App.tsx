@@ -2,15 +2,16 @@
 
 import "preact/debug";
 
-import { h } from "preact";
-import { useEffect, useState } from "preact/hooks";
+import { Fragment, h } from "preact";
+import { useState } from "preact/hooks";
 
+import Error from "../components/Error.tsx";
 import Input from "../components/Input.tsx";
 import IPA from "../components/IPA.tsx";
 import Translation from "../components/Translation.tsx";
 import { debounce } from "../utils/function.ts";
 
-export default () => {
+export default ({ }: AppProps) => {
 	const [input, setInput] = useState("");
 	const [ipa, setIPA] = useState("");
 	const [translation, setTranslation] = useState("");
@@ -48,10 +49,25 @@ export default () => {
 	const onTextChange = debounce(getIPA, 1000);
 
 	return (
-		<div class="app">
-			<Input isError={isError} isLoading={isLoading} onCopy={onCopy} onPronounce={onPronounce} onSwap={onSwap} onClear={onClear} onTextChange={onTextChange} text={input} />
-			<IPA isError={isError} isLoading={isLoading} text={ipa} onCopy={onCopy} />
-			<Translation isError={isError} isLoading={isLoading} text={translation} onCopy={onCopy} onPronounce={onPronounce} onSwap={onSwap} />
-		</div>
+		<Fragment>
+			<div class="app">
+				<div>
+					<h1>Dutch IPA</h1>
+					<a href="https://github.com/Ascor8522/dutch-ipa" target="_blank" title="Dutch IPA GitHub repository">
+						<img src="/icons/github.svg" width="38px" height="38px" alt="GitHub Logo" />
+					</a>
+				</div>
+				<noscript>
+					<Error error="You need to have JavaScript enabled to use the website properly." />
+				</noscript>
+				<Input isError={isError} isLoading={isLoading} onCopy={onCopy} onPronounce={onPronounce} onSwap={onSwap} onClear={onClear} onTextChange={onTextChange} text={input} />
+				<IPA isError={isError} isLoading={isLoading} text={ipa} onCopy={onCopy} />
+				<Translation isError={isError} isLoading={isLoading} text={translation} onCopy={onCopy} onPronounce={onPronounce} onSwap={onSwap} />
+			</div>
+		</Fragment>
 	);
 };
+
+interface AppProps {
+
+}

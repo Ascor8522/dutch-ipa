@@ -4,7 +4,7 @@
   --two: #28283e;
   --three: #3785b9;
   --four: #eeeeee;
-  --five: #8d94a3;
+  --five: #9a9da5;
 }
 @media screen and (prefers-color-scheme: dark) {
   :root {
@@ -19,6 +19,8 @@
     --loading-skeleton-color: rgba(26, 26, 26, 0.1254901961);
     --loading-skeleton-color-lighter: rgba(77, 77, 77, 0.1254901961);
     --card-shadow: #000000;
+    --error-background-color: #ff000060;
+    --error-border-color: #ff0000;
   }
 }
 @media screen and (prefers-color-scheme: light) {
@@ -33,7 +35,9 @@
     --card-text-input-color: rgba(0, 0, 0, 0.1254901961);
     --loading-skeleton-color: rgba(0, 0, 0, 0.1254901961);
     --loading-skeleton-color-lighter: rgba(0, 0, 0, 0.1254901961);
-    --card-shadow: #00000080;
+    --card-shadow: #00000040;
+    --error-background-color: #ff000060;
+    --error-border-color: #ff0000;
   }
 }
 
@@ -60,7 +64,19 @@ html > body > div.app {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 5rem;
+  gap: 4rem;
+}
+html > body > div.app div {
+  display: flex;
+  flex-direction: row;
+}
+html > body > div.app div h1 {
+  flex-grow: 1;
+  margin: 0;
+}
+html > body > div.app div img {
+  height: 100%;
+  width: auto;
 }
 @media screen and (max-width: 600px) {
   html > body > div.app {
@@ -68,6 +84,17 @@ html > body > div.app {
     justify-content: center;
     gap: 1rem;
   }
+  html > body > div.app h1 {
+    padding-left: 2rem;
+  }
+}
+html > body > div.app div.error {
+  background-color: var(--error-background-color);
+  border: solid 1px var(--error-border-color);
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  text-align: center;
+  font-weight: bold;
 }
 html > body > div.app section.card {
   display: flex;
