@@ -1,20 +1,15 @@
-/** @jsx h */
-
-import { h } from "preact";
-
 import Card, { CardProps, Clearable, Copyable, Pronounceable, Swappable } from "../islands/Card.tsx";
 
-export default ({ onCopy, onClear, onPronounce, onSwap, onTextChange, text }: InputProps) => {
+export default (props: InputProps) => {
 	return (
 		<Card
+			{...props}
 			title="Input"
-			text={text}
 			cannotBeDisabled
-			onTextChange={onTextChange}
-			allowCopy onCopy={onCopy}
-			allowClear onClear={onClear}
-			allowPronounce onPronounce={onPronounce}
-			allowSwap onSwap={onSwap}
+			allowCopy
+			allowClear
+			allowPronounce
+			allowSwap
 		/>
 	);
 };

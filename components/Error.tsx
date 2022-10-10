@@ -1,15 +1,11 @@
-/** @jsx h */
-
-import { h } from "preact";
-
-export default ({ error }: ErrorProps) => {
+export default ({ errorMessage }: ErrorProps) => {
 	return (
 		<div class="error">
-			{error}
+			{errorMessage}
 		</div>
 	);
 };
 
 interface ErrorProps {
-	error: string;
+	errorMessage: string;
 }

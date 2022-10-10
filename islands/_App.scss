@@ -4,38 +4,47 @@
 
 @mixin App() {
 	width: 80%;
-	height: 100%;
+	padding: 2rem 0;
+	min-height: calc(100% - 4rem);
 	margin: auto;
-	padding: 0;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	gap: 4rem;
 
-	div {
+	>div:not(.error) {
 		display: flex;
 		flex-direction: row;
+		gap: 1rem;
 
-		h1 {
+		@include mobile.onMobile {
+			padding: 0 1.5rem;
+		}
+
+		>label {
+			display: none;
+		}
+
+		>a {
+			>img {
+				height: 100%;
+				filter: contrast(0.5);
+				@media all and (prefers-color-scheme: dark) {
+					filter: invert(1) contrast(0.5);
+				}
+			}
+		}
+
+		>h1 {
 			flex-grow: 1;
 			margin: 0;
 		}
-
-		img {
-			height: 100%;
-			width: auto;
-		}
-
 	}
 
 	@include mobile.onMobile {
 		width: 100%;
 		justify-content: center;
 		gap: 1rem;
-
-		h1 {
-			padding-left: 2rem;
-		}
 	}
 
 	@include Error.Error();

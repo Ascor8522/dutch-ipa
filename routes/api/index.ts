@@ -13,7 +13,7 @@ export const handler = (req: Request, _ctx: HandlerContext): Promise<Response> =
 	})
 	.then(jsonReq => Promise.all([
 		jsonReq.ipa ? getIPAs(jsonReq.input.text, jsonReq.input.lang) : undefined,
-		jsonReq.translation ? translate(jsonReq.input.text, jsonReq.input.lang, jsonReq.translation.lang) : undefined,
+		// jsonReq.translation ? translate(jsonReq.input.text, jsonReq.input.lang, jsonReq.translation.lang) : undefined,
 	]))
 	.then(res => Response.json(Object.assign({}, ...res)))
 	.catch(err => Response.json({ error: err.message }, { status: 500 }));

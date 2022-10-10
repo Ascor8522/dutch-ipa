@@ -1,7 +1,3 @@
-/** @jsx h */
-
-import { h } from "preact";
-
 export default () => {
 	return (
 		<form action="/api/flush-db/post" method="POST">

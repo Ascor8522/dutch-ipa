@@ -1,7 +1,5 @@
-/** @jsx h */
-
 import { Head } from "$fresh/runtime.ts";
-import { Fragment, h } from "preact";
+import { Fragment } from "preact";
 
 import App from "../islands/App.tsx";
 import { isProduction } from "../utils/env.ts";
@@ -34,7 +32,7 @@ export default () => {
 								window.dataLayer = window.dataLayer || [];
 								function gtag(){dataLayer.push(arguments);}
 								gtag('js', new Date());
-								gtag('config', '${GA_ID}');
+								gtag('config', '${GA_ID}', {});
 							`,
 						}} />
 					</Fragment>

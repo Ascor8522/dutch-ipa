@@ -29,7 +29,7 @@ export const getIPAs = async (sentence: string, lang: InputLanguages): Promise<{
 	const all = { ...results, ...scraped };
 	return {
 		ipa: words
-			.map(word => all[word])
+			.map(word => all[word]!)
 			.map(word => {
 				switch(word) {
 					case IPANotInDB: return null;

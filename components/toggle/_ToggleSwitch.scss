@@ -1,17 +1,16 @@
 @use "sass:math";
 
 @mixin ToggleSwitch() {
+	label.toggle.switch {
+		$width: 3rem;
+		$height: 1.5rem;
+		$slider-diameter: 1rem;
 
-	$width: 3rem;
-	$height: 1.5rem;
-	$slider-diameter: 1rem;
+		$slider-width: $slider-diameter;
+		$slider-height: $slider-diameter;
+		$margin: math.div((math.min($width, $height) - $slider-diameter), 2);
+		$displacement: $width - $slider-height - $margin - $margin;
 
-	$slider-width: $slider-diameter;
-	$slider-height: $slider-diameter;
-	$margin: math.div((math.min($width, $height) - $slider-diameter), 2);
-	$displacement: $width - $slider-height - $margin - $margin;
-
-	label.toggle-switch {
 		position: relative;
 		display: inline-block;
 		width: $width;
@@ -19,6 +18,9 @@
 
 		&:not(.disabled) {
 			cursor: pointer;
+			&:hover {
+				filter: saturate(1.5)  contrast(1.1);
+			}
 		}
 
 		&.disabled {

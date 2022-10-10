@@ -1,25 +1,20 @@
-/** @jsx h */
-
 import classnames from "classnames";
-import { h } from "preact";
-import { useEffect, useRef, useState } from "preact/hooks";
+import { Ref, useEffect, useRef, useState } from "preact/hooks";
 
-import ToggleSwitch from "../components/ToggleSwitch.tsx";
+import ToggleSwitch from "../components/toggle/ToggleSwitch.tsx";
 
-export default ({
-	cannotBeDisabled, isError, isLoading, isClosed, isReadonly, onTextChange, placeholder, text, title,
-	allowCopy, onCopy = () => { }, allowClear, onClear = () => { }, allowPronounce, onPronounce = () => { }, allowSwap, onSwap = () => { }
-}: CardProps & Copyable & Clearable & Pronounceable & Swappable) => {
+export default ({ ...props }: CardProps & Copyable & Clearable & Pronounceable & Swappable) => {
+	const [isEnabled, setIsEnabled] = useState(!props.isClosed);
 
-	const [isEnabled, setIsEnabled] = useState(!isClosed);
-	const [displayedText, setDisplayedText] = useState(text);
-
+	const displayedText =
+		props.error?.message ??
+		(props.isLoading ? "" : undefined) ??
+		props.text ??
+		"";
 	const textBox = useRef<HTMLDivElement>(null);
 
 	const onCheckChanged = (checked: boolean) => setIsEnabled(checked);
-	const onInput = () => onTextChange && getText()
-		? onTextChange(getText())
-		: onClear();
+	const onInput = () => props.onTextChange?.(getText());
 	const onPaste = (e: ClipboardEvent) => {
 		e.preventDefault();
 		const text = e.clipboardData?.getData("text/plain")?.trim() ?? "";
@@ -27,34 +22,29 @@ export default ({
 	};
 
 	const getText = () => textBox.current?.innerText ?? "";
-	const toggleEnabled = () => setIsEnabled(isEnabled => cannotBeDisabled ?? !isEnabled);
-
-	useEffect(() => {
-		setDisplayedText(text ?? "");
-		console.log("refresh");
-	}, [text]);
+	const toggleEnabled = () => setIsEnabled(isEnabled => props.cannotBeDisabled ?? !isEnabled);
 
 	return (
 		<section class="card">
 			<nav>
-				<ToggleSwitch isChecked={cannotBeDisabled ?? isEnabled} isDisabled={cannotBeDisabled} onCheckChanged={onCheckChanged} />
-				<h2 onClick={toggleEnabled}>{title || ""}</h2>
+				<ToggleSwitch isChecked={props.cannotBeDisabled ?? isEnabled} isDisabled={props.cannotBeDisabled} onCheckChanged={onCheckChanged} />
+				<h2 onClick={toggleEnabled}>{props.title || ""}</h2>
 			</nav>
 			{
 				isEnabled && (
 					<div>
-						<div class={classnames("text-input", { "is-loading": isLoading })} onInput={onInput} contentEditable={!isReadonly} autofocus={!isReadonly} onPaste={onPaste} ref={textBox} >{displayedText}</div>
+						<div class={classnames("text-input", { "is-loading": props.isLoading, "error": props.error })} onInput={onInput} contentEditable={!props.isReadonly} autofocus={!props.isReadonly} onPaste={onPaste} ref={textBox} >{displayedText}</div>
 						<nav>
 							{
 								([
-									[allowCopy, () => onCopy(getText()), "Copy", "/icons/content_copy.svg"],
-									[allowPronounce, () => onPronounce(getText()), "Pronounce", "/icons/volume_up.svg"],
-									[allowSwap, onSwap, "Swap", "/icons/swap_vert.svg"],
-									[allowClear, onClear, "Clear", "/icons/close.svg"],
+									[props.allowCopy, () => props.onCopy?.(getText()), "Copy", "/icons/content_copy.svg"],
+									[props.allowPronounce, () => props.onPronounce?.(getText()), "Pronounce", "/icons/volume_up.svg", true],
+									[props.allowSwap, () => props.onSwap?.(), "Swap", "/icons/swap_vert.svg", true],
+									[props.allowClear, () => props.onClear?.(textBox), "Clear", "/icons/close.svg"],
 								] as const)
-									.map(([allow, func, title, icon]) => (
+									.map(([allow, func, title, icon, disabled]) => (
 										allow && (
-											<button onClick={func} title={title}>
+											<button onClick={func} title={title} disabled={disabled}>
 												<img src={icon} alt={title} width="24px" height="24px" />
 											</button>
 										)
@@ -70,12 +60,11 @@ export default ({
 
 export interface CardProps {
 	cannotBeDisabled?: true;
-	isError?: boolean;
+	error?: Error | null;
 	isLoading?: boolean;
 	isClosed?: true;
 	isReadonly?: true;
 	onTextChange?: (text: string) => void;
-	placeholder?: string;
 	text?: string;
 	title?: string;
 }
@@ -87,7 +76,7 @@ export interface Copyable {
 
 export interface Clearable {
 	allowClear?: true;
-	onClear?: () => void;
+	onClear?: (div: Ref<HTMLDivElement>) => void;
 }
 
 export interface Pronounceable {

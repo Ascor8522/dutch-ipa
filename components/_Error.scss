@@ -1,5 +1,5 @@
 @mixin Error {
-	div.error {
+	>div.error {
 		background-color: var(--error-background-color);
 		border: solid 1px var(--error-border-color);
 		padding: 1.5rem;

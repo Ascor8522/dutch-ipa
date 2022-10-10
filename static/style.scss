@@ -1,5 +1,7 @@
 @use "sass:color";
 @use "../islands/App";
+@use "../components/toggle/ToggleSwitch";
+@use "../components/toggle/ToggleArrow";
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 
@@ -12,7 +14,7 @@ $cardTextInputColor: #00000020;
 	--four: #eeeeee;
 	--five: #9a9da5;
 
-	@media screen and (prefers-color-scheme: dark) {
+	@media all and (prefers-color-scheme: dark) {
 		--background-color: var(--one);
 		--text-color: var(--four);
 		--toggle-button-enabled-background-color: var(--three);
@@ -26,9 +28,10 @@ $cardTextInputColor: #00000020;
 		--card-shadow: #000000;
 		--error-background-color: #ff000060;
 		--error-border-color: #ff0000;
+		--placeholder-text-color: var(--five);
 	}
 
-	@media screen and (prefers-color-scheme: light) {
+	@media all and (prefers-color-scheme: light) {
 		--background-color: var(--four);
 		--text-color: var(--one);
 		--toggle-button-enabled-background-color: var(--three);
@@ -42,6 +45,7 @@ $cardTextInputColor: #00000020;
 		--card-shadow: #00000040;
 		--error-background-color: #ff000060;
 		--error-border-color: #ff0000;
+		--placeholder-text-color: var(--five);
 	}
 }
 
@@ -71,6 +75,9 @@ html {
 	background-size: 200% 100%;
 	animation: 1.5s shine linear infinite;
 }
+
+@include ToggleSwitch.ToggleSwitch();
+@include ToggleArrow.ToggleArrow();
 
 @keyframes shine {
 	to {

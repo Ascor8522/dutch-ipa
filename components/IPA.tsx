@@ -1,19 +1,12 @@
-/** @jsx h */
-
-import { h } from "preact";
-
 import Card, { CardProps, Copyable } from "../islands/Card.tsx";
 
-export default ({ text, isError, isLoading, isClosed, onCopy }: IPAProp) => {
+export default (props: IPAProp) => {
 	return (
 		<Card
+			{...props}
 			title="IPA"
-			text={text}
-			isError={isError}
-			isLoading={isLoading}
-			isClosed={isClosed}
 			isReadonly
-			allowCopy onCopy={onCopy}
+			allowCopy
 		/>
 	);
 };

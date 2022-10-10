@@ -11,6 +11,7 @@ export function debounce<Fun extends (...args: any) => void, Args extends Parame
 		}, delay);
 	} as Fun;
 }
+
 export function parse<T extends z.ZodSchema<any>>(schema: T, data: any): data is z.infer<T> {
 	return schema.safeParse(data).success;
 }

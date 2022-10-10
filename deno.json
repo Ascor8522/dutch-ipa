@@ -1,6 +1,16 @@
 {
 	"tasks": {
-		"start": "deno run -A --watch=static/,routes/ dev.ts"
+		"start": "deno run -A --watch=static/,routes/ dev.ts",
+		"sass": "sass static/style.scss:static/style.css --watch",
+		"upgrade": "deno run -A -r https://fresh.deno.dev/update ."
 	},
-	"importMap": "./import_map.json"
+	"importMap": "./import_map.json",
+	"compilerOptions": {
+		"jsx": "react-jsx",
+		"jsxImportSource": "preact",
+		"strict": true,
+		"noUncheckedIndexedAccess": true,
+		"noImplicitOverride": true,
+		"noImplicitReturns": true
+	}
 }

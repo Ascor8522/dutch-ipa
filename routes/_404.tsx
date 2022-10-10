@@ -1,6 +1,4 @@
-/** @jsx h */
-
-import { Fragment, h } from "preact";
+import { Fragment } from "preact";
 
 export default () => (
 	<Fragment>

@@ -2,11 +2,15 @@
 // This file SHOULD be checked into source version control.
 // This file is automatically updated during development when running `dev.ts`.
 
+import config from "./deno.json" assert { type: "json" };
 import * as $0 from "./routes/_404.tsx";
 import * as $1 from "./routes/api/flush-db/index.tsx";
 import * as $2 from "./routes/api/flush-db/post.ts";
 import * as $3 from "./routes/api/index.ts";
-import * as $4 from "./routes/index.tsx";
+import * as $4 from "./routes/api/ipa.ts";
+import * as $5 from "./routes/api/pronounciation.ts";
+import * as $6 from "./routes/api/translation.ts";
+import * as $7 from "./routes/index.tsx";
 import * as $$0 from "./islands/App.tsx";
 import * as $$1 from "./islands/Card.tsx";
 
@@ -16,13 +20,17 @@ const manifest = {
     "./routes/api/flush-db/index.tsx": $1,
     "./routes/api/flush-db/post.ts": $2,
     "./routes/api/index.ts": $3,
-    "./routes/index.tsx": $4,
+    "./routes/api/ipa.ts": $4,
+    "./routes/api/pronounciation.ts": $5,
+    "./routes/api/translation.ts": $6,
+    "./routes/index.tsx": $7,
   },
   islands: {
     "./islands/App.tsx": $$0,
     "./islands/Card.tsx": $$1,
   },
   baseUrl: import.meta.url,
+  config,
 };
 
 export default manifest;

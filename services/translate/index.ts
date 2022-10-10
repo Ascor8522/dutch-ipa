@@ -1,6 +1,5 @@
-import googleTranslate from "google-translate-open-api";
+import googleTranslate from "@vitalets/google-translate-api";
 
 export const translate = (text: string, from: string, to: string): Promise<{ translation: string }> =>
-	googleTranslate(text, { tld: "com", from, to })
-		.then(res => res.data[0])
-		.then(translation => ({ translation }));
+	googleTranslate(text, { from, to, autoCorrect: false })
+		.then(res => ({ translation: res.text }));

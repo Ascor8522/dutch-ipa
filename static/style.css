@@ -6,7 +6,7 @@
   --four: #eeeeee;
   --five: #9a9da5;
 }
-@media screen and (prefers-color-scheme: dark) {
+@media all and (prefers-color-scheme: dark) {
   :root {
     --background-color: var(--one);
     --text-color: var(--four);
@@ -21,9 +21,10 @@
     --card-shadow: #000000;
     --error-background-color: #ff000060;
     --error-border-color: #ff0000;
+    --placeholder-text-color: var(--five);
   }
 }
-@media screen and (prefers-color-scheme: light) {
+@media all and (prefers-color-scheme: light) {
   :root {
     --background-color: var(--four);
     --text-color: var(--one);
@@ -38,6 +39,7 @@
     --card-shadow: #00000040;
     --error-background-color: #ff000060;
     --error-border-color: #ff0000;
+    --placeholder-text-color: var(--five);
   }
 }
 
@@ -58,34 +60,45 @@ html > body {
 }
 html > body > div.app {
   width: 80%;
-  height: 100%;
+  padding: 2rem 0;
+  min-height: calc(100% - 4rem);
   margin: auto;
-  padding: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 4rem;
 }
-html > body > div.app div {
+html > body > div.app > div {
   display: flex;
   flex-direction: row;
+  gap: 1rem;
 }
-html > body > div.app div h1 {
+@media all and (max-width: 600px) {
+  html > body > div.app > div {
+    padding: 0 1.5rem;
+  }
+}
+html > body > div.app > div > label {
+  display: none;
+}
+html > body > div.app > div > a > img {
+  height: 100%;
+  filter: contrast(0.5);
+}
+@media all and (prefers-color-scheme: dark) {
+  html > body > div.app > div > a > img {
+    filter: invert(1) contrast(0.5);
+  }
+}
+html > body > div.app > div > h1 {
   flex-grow: 1;
   margin: 0;
 }
-html > body > div.app div img {
-  height: 100%;
-  width: auto;
-}
-@media screen and (max-width: 600px) {
+@media all and (max-width: 600px) {
   html > body > div.app {
     width: 100%;
     justify-content: center;
     gap: 1rem;
-  }
-  html > body > div.app h1 {
-    padding-left: 2rem;
   }
 }
 html > body > div.app div.error {
@@ -96,7 +109,7 @@ html > body > div.app div.error {
   text-align: center;
   font-weight: bold;
 }
-html > body > div.app section.card {
+html > body > div.app > section.card {
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -104,12 +117,12 @@ html > body > div.app section.card {
   padding: 1.5rem;
   border-radius: 0.5rem;
 }
-@media screen and (max-width: 600px) {
-  html > body > div.app section.card {
+@media all and (max-width: 600px) {
+  html > body > div.app > section.card {
     border-radius: 0;
   }
 }
-html > body > div.app section.card nav {
+html > body > div.app > section.card nav {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -117,28 +130,98 @@ html > body > div.app section.card nav {
   gap: 1rem;
   justify-content: flex-end;
 }
-html > body > div.app section.card nav label.toggle-switch {
+html > body > div.app > section.card nav > h2 {
+  margin: 0;
+  flex-grow: 1;
+  font-size: 1.25rem;
+}
+html > body > div.app > section.card nav > button {
+  position: relative;
+  cursor: pointer;
+  background-color: var(--button-color);
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.25rem;
+  transition: background-color 0.2s ease-in-out;
+}
+html > body > div.app > section.card nav > button:disabled {
+  filter: brightness(0.7) grayscale(0.8) contrast(0.8);
+}
+html > body > div.app > section.card nav > button:not(:disabled):hover {
+  background-color: var(--button-hover-color);
+}
+html > body > div.app > section.card nav > button:not(:disabled):active {
+  top: 2px;
+}
+html > body > div.app > section.card nav > button > img {
+  filter: invert(1);
+  width: 1.5rem;
+  height: auto;
+}
+html > body > div.app > section.card nav:nth-of-type(2) {
+  justify-content: end;
+}
+html > body > div.app > section.card > div {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+@media all and (max-width: 600px) {
+  html > body > div.app > section.card > div {
+    flex-direction: column;
+  }
+}
+html > body > div.app > section.card > div > div.text-input {
+  display: block;
+  min-height: 1rem;
+  padding: 1rem;
+  cursor: text;
+  background-color: var(--card-text-input-color);
+  border-radius: 0.5rem;
+  flex-grow: 1;
+  font-size: 1.25rem;
+}
+html > body > div.app > section.card > div > div.text-input.error {
+  background-color: rgba(255, 0, 0, 0.2941176471);
+}
+html > body > div.app > section.card > div > div.text-input[contenteditable=true]:empty::before {
+  color: var(--placeholder-text-color);
+  font-size: 1rem;
+  content: "Enter text here...";
+  cursor: text;
+}
+
+.is-loading {
+  background: linear-gradient(110deg, var(--loading-skeleton-color) 8%, var(--loading-skeleton-color-lighter) 18%, var(--loading-skeleton-color) 33%);
+  background-size: 200% 100%;
+  animation: 1.5s shine linear infinite;
+}
+
+label.toggle.switch {
   position: relative;
   display: inline-block;
   width: 3rem;
   height: 1.5rem;
 }
-html > body > div.app section.card nav label.toggle-switch:not(.disabled) {
+label.toggle.switch:not(.disabled) {
   cursor: pointer;
 }
-html > body > div.app section.card nav label.toggle-switch.disabled > input + span {
+label.toggle.switch:not(.disabled):hover {
+  filter: saturate(1.5) contrast(1.1);
+}
+label.toggle.switch.disabled > input + span {
   filter: brightness(0.7) grayscale(0.8) contrast(0.8);
 }
-html > body > div.app section.card nav label.toggle-switch > input {
+label.toggle.switch > input {
   display: none;
 }
-html > body > div.app section.card nav label.toggle-switch > input:checked + span {
+label.toggle.switch > input:checked + span {
   background-color: var(--toggle-button-enabled-background-color);
 }
-html > body > div.app section.card nav label.toggle-switch > input:checked + span:before {
+label.toggle.switch > input:checked + span:before {
   transform: translateX(1.5rem);
 }
-html > body > div.app section.card nav label.toggle-switch > span {
+label.toggle.switch > span {
   position: absolute;
   top: 0;
   left: 0;
@@ -148,7 +231,7 @@ html > body > div.app section.card nav label.toggle-switch > span {
   transition: 0.4s;
   border-radius: 999px;
 }
-html > body > div.app section.card nav label.toggle-switch > span:before {
+label.toggle.switch > span:before {
   position: absolute;
   content: "";
   height: 1rem;
@@ -159,51 +242,23 @@ html > body > div.app section.card nav label.toggle-switch > span:before {
   transition: 0.4s;
   border-radius: 999px;
 }
-html > body > div.app section.card nav h2 {
-  margin: 0;
-  flex-grow: 1;
-  font-size: 1.25rem;
+
+label.toggle.arrow {
+  height: inherit;
+  width: auto;
 }
-html > body > div.app section.card nav button {
+label.toggle.arrow img {
+  height: 100%;
+  width: auto;
+}
+label.toggle.arrow:not(.disabled) {
   cursor: pointer;
-  background-color: var(--button-color);
-  border: none;
-  border-radius: 0.5rem;
-  padding: 0.25rem;
 }
-html > body > div.app section.card nav button:hover {
-  background-color: var(--button-hover-color);
+label.toggle.arrow.disabled > input + span {
+  filter: brightness(0.7) grayscale(0.8) contrast(0.8);
 }
-html > body > div.app section.card nav button > img {
-  filter: invert(1);
-  width: 1.5rem;
-  height: auto;
-}
-html > body > div.app section.card nav:nth-of-type(2) {
-  justify-content: end;
-}
-html > body > div.app section.card div {
-  display: flex;
-  flex-direction: row;
-  gap: 1rem;
-}
-@media screen and (max-width: 600px) {
-  html > body > div.app section.card div {
-    flex-direction: column;
-  }
-}
-html > body > div.app section.card div div.text-input {
-  min-height: 1rem;
-  padding: 1rem;
-  background-color: var(--card-text-input-color);
-  border-radius: 0.5rem;
-  flex-grow: 1;
-  font-size: 1.25rem;
-}
-.is-loading {
-  background: linear-gradient(110deg, var(--loading-skeleton-color) 8%, var(--loading-skeleton-color-lighter) 18%, var(--loading-skeleton-color) 33%);
-  background-size: 200% 100%;
-  animation: 1.5s shine linear infinite;
+label.toggle.arrow > input {
+  display: none;
 }
 
 @keyframes shine {
