@@ -1,9 +1,9 @@
 import { HandlerContext } from "$fresh/server.ts";
 import { z } from "zod";
 
-import { Word } from "../../services/index.ts";
 import { getIPA } from "../../services/ipa/index.ts";
 import { clean, Json } from "../../utils/json.ts";
+import { sentenceToWords } from './../../utils/string.ts';
 
 const inputLanguages = z.enum(["nl"]);
 export type InputLanguages = z.infer<typeof inputLanguages>;
@@ -28,7 +28,7 @@ export const handler = (req: Request, _ctx: HandlerContext): Promise<Response> =
 	.json()
 	.then(jsonReq => inputSchema.parse(jsonReq, { errorMap: () => ({ message: "Request does not meet schema." }) }))
 	.then(jsonReq => Promise.all([
-		jsonReq.ipa ? getIPA(jsonReq.input.text.split(" ") as Word[], jsonReq.input.lang) : undefined,
+		jsonReq.ipa ? getIPA(sentenceToWords(jsonReq.input.text), jsonReq.input.lang) : undefined,
 		// jsonReq.translation ? translate(jsonReq.input.text, jsonReq.input.lang, jsonReq.translation.lang) : undefined,
 	]))
 	.then(clean)
