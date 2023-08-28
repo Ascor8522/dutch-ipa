@@ -1,46 +1,39 @@
-import { InputLanguages } from "../../routes/api/index.ts";
-import { getUnique, zip } from "../../utils/array.ts";
-import { sentenceToWords } from "../../utils/string.ts";
-import { redisGet, redisSet } from "./../database/index.ts";
-import { DutchIPAService } from "./lang/dutch.ts";
+import { Word } from "../index.ts";
+import { getUnique, mapToObject } from './../../utils/array.ts';
+import { missing, retrieveIPA, storeIPA } from "./../kv.ts";
+import { default as dutchIPA } from "./dutch.ts";
 
-export const IPANotInDB: unique symbol = Symbol("IPA_NO_IN_DB");
-export const IPAAlreadyInDBButNull: unique symbol = Symbol("IPA_ALREADY_IN_DB_BUT_NULL");
-export const IPANotCouldNotScrape: unique symbol = Symbol("IPA_COULD_NOT_SCRAPE");
+export const IPAUnavailable = Symbol("IPA_UNAVAILABLE");
 
-export const getIPAs = async (sentence: string, lang: InputLanguages): Promise<{ ipa: (string | null)[]; }> => {
-	const words = sentenceToWords(sentence);
-	const results = await redisGet(getUnique(words));
-	const missing = Object
-		.entries(results)
-		.filter(([_key, value]) => value === IPANotInDB)
-		.map(([key, _value]) => key);
-	const scraped = await Promise
-		.all([
-			missing,
-			Promise
-				.allSettled(missing.map(services[lang]))
-				.then(results => results.map(result => result.status === "fulfilled" ? result.value : IPANotCouldNotScrape)),
-		])
-		.then(([words, results]) => zip(words, results))
-		.then(Object.fromEntries) as Record<string, string | typeof IPANotCouldNotScrape>;
-	await redisSet(scraped);
-	console.log("words", words, "results", results, "missing", missing, "scraped", scraped, "combined", { ...results, ...scraped });
-	const all = { ...results, ...scraped };
-	return {
-		ipa: words
-			.map(word => all[word]!)
-			.map(word => {
-				switch(word) {
-					case IPANotInDB: return null;
-					case IPAAlreadyInDBButNull: return null;
-					case IPANotCouldNotScrape: return null;
-					default: return word;
-				}
-			}),
-	};
-};
+export type IPAAvailable = string & { readonly _brand: unique symbol; };
+export type IPAUnavailable = typeof IPAUnavailable;
 
-const services: Record<InputLanguages, (word: string) => Promise<string | typeof IPANotCouldNotScrape>> = {
-	"nl": DutchIPAService.getIPA,
+export type IPAPronunciation =
+	| IPAAvailable
+	| IPAUnavailable;
+
+export const getIPA = async (words: Word[], language: string): Promise<{ ipa: Record<Word, IPAPronunciation>; }> => {
+	words = getUnique(words);
+
+	console.log("[IPA] Words", words);
+
+	const dbRetrieved = await retrieveIPA(words, language);
+	const { present, absent } = missing(dbRetrieved);
+
+	console.log("[IPA] Present in db", present);
+	console.log("[IPA] Absent from db", absent);
+
+	let fetchIPA: (words: Word) => Promise<IPAPronunciation>;
+	switch(language) {
+		case "nl": fetchIPA = dutchIPA; break;
+		default: throw new Error("Language not supported");
+	}
+
+	const retrieved = await mapToObject(absent, fetchIPA);
+
+	if(Object.keys(retrieved).length) console.log("[IPA] Retrieved from service", retrieved);
+
+	await storeIPA(retrieved, language);
+
+	return { ipa: { ...present, ...retrieved } };
 };

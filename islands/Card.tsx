@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import { Ref, useEffect, useRef, useState } from "preact/hooks";
+import { Ref, useRef, useState } from "preact/hooks";
 
 import ToggleSwitch from "../components/toggle/ToggleSwitch.tsx";
 
@@ -12,6 +12,7 @@ export default ({ ...props }: CardProps & Copyable & Clearable & Pronounceable &
 		props.text ??
 		"";
 	const textBox = useRef<HTMLDivElement>(null);
+	// textBox.current && window.getComputedStyle(textBox.current, ":empty::before").setProperty("content", props.placeholder ?? "Enter text here...");
 
 	const onCheckChanged = (checked: boolean) => setIsEnabled(checked);
 	const onInput = () => props.onTextChange?.(getText());
@@ -27,13 +28,25 @@ export default ({ ...props }: CardProps & Copyable & Clearable & Pronounceable &
 	return (
 		<section class="card">
 			<nav>
-				<ToggleSwitch isChecked={props.cannotBeDisabled ?? isEnabled} isDisabled={props.cannotBeDisabled} onCheckChanged={onCheckChanged} />
+				<ToggleSwitch
+					isChecked={props.cannotBeDisabled ?? isEnabled}
+					isDisabled={props.cannotBeDisabled}
+					onCheckChanged={onCheckChanged} />
 				<h2 onClick={toggleEnabled}>{props.title || ""}</h2>
 			</nav>
 			{
 				isEnabled && (
 					<div>
-						<div class={classnames("text-input", { "is-loading": props.isLoading, "error": props.error })} onInput={onInput} contentEditable={!props.isReadonly} autofocus={!props.isReadonly} onPaste={onPaste} ref={textBox} >{displayedText}</div>
+						<div
+							class={classnames("text-input", { "is-loading": props.isLoading, "error": props.error })}
+							onInput={onInput}
+							contentEditable={!props.isReadonly}
+							autofocus={!props.isReadonly}
+							spellcheck={false}
+							onPaste={onPaste}
+							ref={textBox}>
+							{displayedText}
+						</div>
 						<nav>
 							{
 								([
@@ -44,7 +57,7 @@ export default ({ ...props }: CardProps & Copyable & Clearable & Pronounceable &
 								] as const)
 									.map(([allow, func, title, icon, disabled]) => (
 										allow && (
-											<button onClick={func} title={title} disabled={disabled}>
+											<button onClick={func} title={`${title} (coming)`} disabled={disabled}>
 												<img src={icon} alt={title} width="24px" height="24px" />
 											</button>
 										)
@@ -67,6 +80,7 @@ export interface CardProps {
 	onTextChange?: (text: string) => void;
 	text?: string;
 	title?: string;
+	placeholder?: string;
 }
 
 export interface Copyable {
@@ -81,7 +95,7 @@ export interface Clearable {
 
 export interface Pronounceable {
 	allowPronounce?: true;
-	onPronounce?: Function;
+	onPronounce?: (text: string) => void;
 }
 
 export interface Swappable {

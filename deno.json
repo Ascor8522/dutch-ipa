@@ -1,16 +1,50 @@
 {
-	"tasks": {
-		"start": "deno run -A --watch=static/,routes/ dev.ts",
-		"sass": "sass static/style.scss:static/style.css --watch",
-		"upgrade": "deno run -A -r https://fresh.deno.dev/update ."
-	},
-	"importMap": "./import_map.json",
 	"compilerOptions": {
 		"jsx": "react-jsx",
 		"jsxImportSource": "preact",
-		"strict": true,
-		"noUncheckedIndexedAccess": true,
 		"noImplicitOverride": true,
-		"noImplicitReturns": true
+		"noImplicitReturns": true,
+		"noUncheckedIndexedAccess": true,
+		"strict": true
+	},
+	"imports": {
+		"async/": "https://deno.land/std@0.200.0/async/",
+		"@preact/signals": "https://esm.sh/*@preact/signals@1.1.3",
+		"@preact/signals-core": "https://esm.sh/*@preact/signals-core@1.2.3",
+		"@vitalets/google-translate-api": "https://esm.sh/@vitalets/google-translate-api@8.0.0/",
+		"$fresh/": "https://deno.land/x/fresh@1.4.2/",
+		"classnames": "https://esm.sh/classnames@2.3.1",
+		"deno_dom": "https://deno.land/x/deno_dom@v0.1.34-alpha/deno-dom-wasm.ts",
+		"dotenv": "https://deno.land/std@0.154.0/dotenv/mod.ts",
+		"preact": "https://esm.sh/preact@10.15.1",
+		"preact-render-to-string": "https://esm.sh/*preact-render-to-string@6.2.1",
+		"preact/": "https://esm.sh/preact@10.15.1/",
+		"zod": "https://deno.land/x/zod@v3.16.1/mod.ts"
+	},
+	"lint": {
+		"rules": {
+			"tags": [
+				"fresh",
+				"recommended"
+			]
+		},
+		"exclude": [
+			"_fresh"
+		]
+	},
+	"tasks": {
+		"esm:add": "deno run -A https://esm.sh/v129 add",
+		"esm:remove": "deno run -A https://esm.sh/v129 remove",
+		"esm:update": "deno run -A https://esm.sh/v129 update",
+		"sass": "sass static/style.scss:static/style.css --watch",
+		"start": "deno run -A --watch=static/,routes/ --unstable dev.ts",
+		"upgrade": "deno run -A -r https://fresh.deno.dev/update .",
+		"build": "deno run -A dev.ts build",
+		"preview": "deno run -A main.ts"
+	},
+	"fmt": {
+		"exclude": [
+			"_fresh"
+		]
 	}
 }

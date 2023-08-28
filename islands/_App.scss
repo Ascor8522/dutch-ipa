@@ -29,6 +29,7 @@
 			>img {
 				height: 100%;
 				filter: contrast(0.5);
+
 				@media all and (prefers-color-scheme: dark) {
 					filter: invert(1) contrast(0.5);
 				}
@@ -43,7 +44,7 @@
 
 	@include mobile.onMobile {
 		width: 100%;
-		justify-content: center;
+		justify-content: flex-start;
 		gap: 1rem;
 	}
 

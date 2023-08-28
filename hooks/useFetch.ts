@@ -1,14 +1,34 @@
 import { useEffect, useState } from "preact/hooks";
 
-interface FetchStatus<T> {
-	isLoading: boolean;
-	error: Error | null;
-	data: T | null;
+export interface FetchLoading {
+	isLoading: true;
+	error: null;
+	data: null;
 }
 
+export interface FetchError {
+	isLoading: false;
+	error: Error;
+	data: null;
+}
+
+export interface FetchData<T> {
+	isLoading: false;
+	error: null;
+	data: T;
+}
+
+export type FetchStatus<T> =
+	| FetchLoading
+	| FetchError
+	| FetchData<T>;
+
 export const useFetch = <T>(text: string): FetchStatus<T> => {
-	const [state, setState] = useState<FetchStatus<T>>({ isLoading: false, error: null, data: null });
+	// isLoading to false to prevent loading animation on landing
+	const [state, setState] = useState<FetchStatus<T>>({ isLoading: false, error: null, data: null } as unknown as FetchLoading);
+
 	if(!text) return state;
+
 	useEffect(() => {
 		Promise
 			.resolve()
@@ -17,7 +37,7 @@ export const useFetch = <T>(text: string): FetchStatus<T> => {
 				method: "POST",
 				body: JSON.stringify({
 					input: { lang: "nl", text, },
-					ipa: true,
+					ipa: {},
 					translation: { lang: "en", }
 				}),
 			}))
@@ -29,5 +49,6 @@ export const useFetch = <T>(text: string): FetchStatus<T> => {
 			.then(data => setState({ isLoading: false, error: null, data }))
 			.catch((error: Error) => setState({ isLoading: false, error, data: null }));
 	}, [text]);
+
 	return state;
 };

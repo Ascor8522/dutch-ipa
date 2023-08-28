@@ -8,16 +8,18 @@ export default () => {
 
 	const title = "Dutch IPA - IPA, pronunciation, translation, and more";
 	const description = "Get the IPA transcription, the pronunciation, and the translation for a whole sentence in Dutch.";
+	const keywords = "Dutch, IPA, sentence, translation, pronunciation";
 	const icon = "/favicon.png";
+	const iconDescription = "The logo of the Dutch IPA website - A cheese with a thinking face";
 	const url = "https://dutch-ipa.deno.dev/";
-	const GA_ID = isProduction() ? Deno.env.get("GA_ID") ?? "" : "";
+	const GA_ID = Deno.env.get("GA_ID") ?? "";
 
 	return (
 		<Fragment>
 			<Head>
 				<title>{title}</title>
 				<meta name="description" content={description} />
-				<meta name="keywords" content="Dutch, IPA, sentence, translation, pronunciation" />
+				<meta name="keywords" content={keywords} />
 				<link rel="preload" href="/style.css" as="style" />
 				<link rel="stylesheet" href="/style.css" />
 				<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
@@ -43,7 +45,7 @@ export default () => {
 				<meta property="og:description" content={description} />
 				<meta property="og:type" content="website" />
 				<meta property="og:image" content={icon} />
-				<meta property="og:image:alt" content={`The logo of the Dutch IPA website - A cheese with a thinking face`} />
+				<meta property="og:image:alt" content={iconDescription} />
 				<script type="application/ld+json" dangerouslySetInnerHTML={{
 					__html: `
 						{

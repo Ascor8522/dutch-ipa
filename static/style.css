@@ -68,40 +68,40 @@ html > body > div.app {
   justify-content: center;
   gap: 4rem;
 }
-html > body > div.app > div {
+html > body > div.app > div:not(.error) {
   display: flex;
   flex-direction: row;
   gap: 1rem;
 }
 @media all and (max-width: 600px) {
-  html > body > div.app > div {
+  html > body > div.app > div:not(.error) {
     padding: 0 1.5rem;
   }
 }
-html > body > div.app > div > label {
+html > body > div.app > div:not(.error) > label {
   display: none;
 }
-html > body > div.app > div > a > img {
+html > body > div.app > div:not(.error) > a > img {
   height: 100%;
   filter: contrast(0.5);
 }
 @media all and (prefers-color-scheme: dark) {
-  html > body > div.app > div > a > img {
+  html > body > div.app > div:not(.error) > a > img {
     filter: invert(1) contrast(0.5);
   }
 }
-html > body > div.app > div > h1 {
+html > body > div.app > div:not(.error) > h1 {
   flex-grow: 1;
   margin: 0;
 }
 @media all and (max-width: 600px) {
   html > body > div.app {
     width: 100%;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 1rem;
   }
 }
-html > body > div.app div.error {
+html > body > div.app > div.error {
   background-color: var(--error-background-color);
   border: solid 1px var(--error-border-color);
   padding: 1.5rem;
@@ -113,7 +113,7 @@ html > body > div.app > section.card {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  box-shadow: var(--card-shadow) 0px 0px 20px 0px;
+  box-shadow: var(--card-shadow) 0 0 20px 0;
   padding: 1.5rem;
   border-radius: 0.5rem;
 }
@@ -180,9 +180,6 @@ html > body > div.app > section.card > div > div.text-input {
   border-radius: 0.5rem;
   flex-grow: 1;
   font-size: 1.25rem;
-}
-html > body > div.app > section.card > div > div.text-input.error {
-  background-color: rgba(255, 0, 0, 0.2941176471);
 }
 html > body > div.app > section.card > div > div.text-input[contenteditable=true]:empty::before {
   color: var(--placeholder-text-color);

@@ -1,20 +1,23 @@
 import "preact/debug";
 
+import { debounce } from "async/debounce.ts";
 import { Fragment } from "preact";
 import { Ref, useState } from "preact/hooks";
 
 import Error from "../components/Error.tsx";
-import Input from "../components/Input.tsx";
 import IPA from "../components/IPA.tsx";
+import Input from "../components/Input.tsx";
 import Translation from "../components/Translation.tsx";
 import { useFetch } from "../hooks/useFetch.ts";
-import { debounce } from "../utils/function.ts";
+import { Word } from "../services/index.ts";
+import { rearrange } from "../utils/array.ts";
+import { sentenceToWords } from "./../utils/string.ts";
 
 export default ({ }: AppProps) => {
 	const [input, setInput] = useState("");
 
-	const { isLoading, error, data } = useFetch<{ ipa: (string | null)[], translation?: string; }>(input);
-	const ipa = data?.ipa?.map(word => word ?? "🤔").join(" ") ?? "";
+	const { isLoading, error, data } = useFetch<{ ipa: Record<Word, string | null>, translation?: string; }>(input);
+	const ipa = rearrange(sentenceToWords(input), data?.ipa ?? {}).map(word => word ?? "🤔").join(" ") ?? "";
 	const translation = data?.translation ?? "";
 
 	const onCopy = (text: string) => navigator
@@ -30,7 +33,7 @@ export default ({ }: AppProps) => {
 		const url = new URL(window.location.toString());
 		url.hash = encodeURIComponent(text);
 		history.pushState({ text }, "", window.location.href);
-	}, 500);
+	}, 800);
 	window.onpopstate = (event: PopStateEvent) => setInput(event.state.text);
 
 	return (
@@ -45,9 +48,25 @@ export default ({ }: AppProps) => {
 				<noscript>
 					<Error errorMessage="You need to have JavaScript enabled to use the website properly." />
 				</noscript>
-				<Input onCopy={onCopy} onPronounce={onPronounce} onSwap={onSwap} onClear={onClear} onTextChange={onTextChange} />
-				<IPA text={ipa} error={error} isLoading={isLoading} onCopy={onCopy} />
-				<Translation text={translation} error={error} isLoading={isLoading} onCopy={onCopy} onPronounce={onPronounce} onSwap={onSwap} />
+				<Input
+					placeholder="Write a sentence here..."
+					onCopy={onCopy}
+					onPronounce={onPronounce}
+					onSwap={onSwap}
+					onClear={onClear}
+					onTextChange={onTextChange} />
+				<IPA
+					text={ipa}
+					error={error}
+					isLoading={isLoading}
+					onCopy={onCopy} />
+				<Translation
+					text={translation}
+					error={error}
+					isLoading={isLoading}
+					onCopy={onCopy}
+					onPronounce={onPronounce}
+					onSwap={onSwap} />
 			</div>
 		</Fragment>
 	);

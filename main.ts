@@ -11,5 +11,4 @@ import manifest from "./fresh.gen.ts";
 
 export const domParser = new DOMParser();
 
-
 await start(manifest);

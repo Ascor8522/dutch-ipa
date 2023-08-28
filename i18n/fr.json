@@ -1,0 +1,42 @@
+{
+	"app_name": "Dutch IPA",
+	"app_title": "$1 - IPA, prononciation, traduction, et plus encore",
+	"app_description": "Get the IPA transcription, the pronunciation, and the translation for a whole sentence in Dutch.",
+	"app_icon_description": "Le logo du site $1 - Un fromage avec un visage qui pense",
+	"app_keywords": "Dutch, IPA, phrase, traduction, prononciation",
+
+	"404_title": "404: pas trouvé",
+	"404_back_to_home": "Retourner à l'accueil",
+
+	"home_repo_link": "Repository GitHub de $1",
+	"home_github_image": "Logo de GitHub",
+
+	"home_input_title": "Entrée",
+	"home_input_placeholder": "Entrez votre texte ici...",
+	"home_ipa_title": "IPA",
+	"home_ipa_placeholder": "L'IPA va apparaitre ici...",
+	"home_translation_title": "Traduction",
+	"home_translation_placeholder": "La traduction va apparaitre ici...",
+
+	"button_copy": "Copier",
+	"button_pronounce": "Prononcer",
+	"button_swap": "Échanger",
+	"button_clear": "Effacer",
+
+	"action_copy_success": "Copié dans le presse-papier !",
+	"action_copy_error": "Failed to copy to clipboard!",
+	"action_pronounce_success": "Prononcé !",
+	"action_pronounce_error": "Failed to pronounce!",
+	"action_swap_success": "Échangé !",
+	"action_swap_error": "Failed to swap!",
+	"action_clear_success": "Effacé !",
+	"action_clear_error": "Failed to clear!",
+
+	"error_javascript_disabled": "Vous avez besoin d'avoir JavaScript activé pour pouvoir utiliser ce site web.",
+	"feature_coming": "Bientôt !",
+
+	"language_en": "Anglais",
+	"language_nl": "Néerlandais",
+	"language_de": "Allemand",
+	"language_fr": "Français"
+}

@@ -1,8 +1,14 @@
 {
-  "deno.enable": true,
-  "deno.lint": true,
-"editor.defaultFormatter": "denoland.vscode-deno",
-"[xml]": {
-	"editor.defaultFormatter": "redhat.vscode-xml"
-}
+	"deno.enable": true,
+	"deno.lint": true,
+	"deno.unstable": true,
+	"editor.defaultFormatter": "denoland.vscode-deno",
+	"[xml]": {
+		"editor.defaultFormatter": "redhat.vscode-xml"
+	},
+	"cSpell.words": [
+		"asynciterable",
+		"noredirect",
+		"Uitspraak"
+	]
 }

@@ -1,0 +1,42 @@
+{
+	"app_name": "Dutch IPA",
+	"app_title": "$1 - IPA, pronunciation, translation, and more",
+	"app_description": "Get the IPA transcription, the pronunciation, and the translation for a whole sentence in Dutch.",
+	"app_icon_description": "The logo of the $1 website - A cheese with a thinking face",
+	"app_keywords": "Dutch, IPA, sentence, translation, pronunciation",
+
+	"404_title": "404: Not found",
+	"404_back_to_home": "Back to the home page",
+
+	"home_repo_link": "$1 GitHub repository",
+	"home_github_image": "GitHub logo",
+
+	"home_input_title": "Input",
+	"home_input_placeholder": "Enter text here...",
+	"home_ipa_title": "IPA",
+	"home_ipa_placeholder": "IPA will appear here...",
+	"home_translation_title": "Translation",
+	"home_translation_placeholder": "Translation will appear here...",
+
+	"button_copy": "Copy",
+	"button_pronounce": "Pronounce",
+	"button_swap": "Swap",
+	"button_clear": "Clear",
+
+	"action_copy_success": "Copied to clipboard!",
+	"action_copy_error": "Failed to copy to clipboard!",
+	"action_pronounce_success": "Pronounced!",
+	"action_pronounce_error": "Failed to pronounce!",
+	"action_swap_success": "Swapped!",
+	"action_swap_error": "Failed to swap!",
+	"action_clear_success": "Cleared!",
+	"action_clear_error": "Failed to clear!",
+
+	"error_javascript_disabled": "You need to have JavaScript enabled to use the website properly.",
+	"feature_coming": "Coming soon!",
+
+	"language_en": "English",
+	"language_nl": "Dutch",
+	"language_de": "German",
+	"language_fr": "French"
+}
