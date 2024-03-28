@@ -7,18 +7,22 @@
 		"noUncheckedIndexedAccess": true,
 		"strict": true
 	},
+	"exclude": [
+		"**/_fresh/*"
+	],
 	"imports": {
-		"async/": "https://deno.land/std@0.200.0/async/",
-		"@preact/signals": "https://esm.sh/*@preact/signals@1.1.3",
-		"@preact/signals-core": "https://esm.sh/*@preact/signals-core@1.2.3",
+		"@preact/signals": "https://esm.sh/*@preact/signals@1.2.2",
+		"@preact/signals-core": "https://esm.sh/*@preact/signals-core@1.5.1",
 		"@vitalets/google-translate-api": "https://esm.sh/@vitalets/google-translate-api@8.0.0/",
-		"$fresh/": "https://deno.land/x/fresh@1.4.2/",
+		"$fresh/": "https://deno.land/x/fresh@1.6.8/",
+		"$std/": "https://deno.land/std@0.216.0/",
+		"async/": "https://deno.land/std@0.200.0/async/",
 		"classnames": "https://esm.sh/classnames@2.3.1",
 		"deno_dom": "https://deno.land/x/deno_dom@v0.1.38/deno-dom-wasm.ts",
 		"dotenv": "https://deno.land/std@0.200.0/dotenv/mod.ts",
-		"preact": "https://esm.sh/preact@10.15.1",
+		"preact": "https://esm.sh/preact@10.19.6",
+		"preact/": "https://esm.sh/preact@10.19.6/",
 		"preact-render-to-string": "https://esm.sh/*preact-render-to-string@6.2.1",
-		"preact/": "https://esm.sh/preact@10.15.1/",
 		"zod": "https://deno.land/x/zod@v3.22.2/mod.ts"
 	},
 	"lint": {
@@ -27,24 +31,16 @@
 				"fresh",
 				"recommended"
 			]
-		},
-		"exclude": [
-			"_fresh"
-		]
+		}
 	},
 	"tasks": {
-		"esm:add": "deno run -A https://esm.sh/v129 add",
-		"esm:remove": "deno run -A https://esm.sh/v129 remove",
-		"esm:update": "deno run -A https://esm.sh/v129 update",
+		"build": "deno run dev.ts build",
+		"esm:add": "deno run https://esm.sh/v129 add",
+		"esm:remove": "deno run https://esm.sh/v129 remove",
+		"esm:update": "deno run https://esm.sh/v129 update",
+		"preview": "deno run --allow-env --allow-read --allow-write --allow-run --allow-net --unstable-kv main.ts",
 		"sass": "sass static/style.scss:static/style.css --watch",
-		"start": "deno run -A --watch=static/,routes/ --unstable dev.ts",
-		"upgrade": "deno run -A -r https://fresh.deno.dev/update .",
-		"build": "deno run -A dev.ts build",
-		"preview": "deno run -A main.ts"
-	},
-	"fmt": {
-		"exclude": [
-			"_fresh"
-		]
+		"start": "deno run --allow-env --allow-read --allow-write --allow-run --allow-net --watch=static/,routes/ --unstable-kv dev.ts",
+		"upgrade": "deno run --allow-read --allow-write --allow-run -r https://fresh.deno.dev/update ."
 	}
 }

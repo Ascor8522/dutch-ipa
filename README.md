@@ -18,10 +18,9 @@ A website that shows you the IPA transcription of a Dutch sentence.
 
 0. Requirements:
 
-- [Deno](https://deno.land/)
+- [Deno](https://deno.land/) (1.32+)
 - [SASS](https://sass-lang.com/)
 - an internet connection (for the backend to fetch the pronunciations)
-- a Redis database
 
 1. Clone the repository:
 
@@ -34,8 +33,6 @@ cd dutch-ipa
 
 Copy the `.env.example` file to `.env` and fill in the required values.
 
-The credentials are for a **Redis database**.
-
 ## Usage
 
 ### Development
@@ -46,7 +43,8 @@ The credentials are for a **Redis database**.
 deno task sass
 ```
 
-This will watch the SCSS files re-compile as necessary (only the `static/style.scss` file is watched).
+This will watch the SCSS files re-compile as necessary (only the
+`static/style.scss` file is watched).
 
 2. Start the dev server:
 
@@ -62,7 +60,8 @@ This will watch the project directory and restart the dev server as necessary.
 
 2. Build the project (see previous section)
 
-You must have run the project in development mode at least once to build the application (generate routes).
+You must have run the project in development mode at least once to build the
+application (generate routes).
 
 3. Start the server:
 
@@ -74,23 +73,26 @@ deno run -A main.ts
 
 ### There is sometimes a thinking emoji (🤔) in the IPA transcription
 
-> This means that no IPA transcription has been found for the corresponding word.
+> This means that no IPA transcription has been found for the corresponding
+> word.
 
 ### There are errors in the IPA transcription
 
-> This is because of how the source of data we use works. When a verb is conjugated, or when a word is in plural, the source redirects to the base form of the word.
+> This is because of how the source of data we use works. When a verb is
+> conjugated, or when a word is in plural, the source redirects to the base form
+> of the word.
 >
 > I am aware of this and am working on a solution.
 
 ### What source of data do you use?
 
 > For the IPA:
+>
 > - Dutch:
->	- [Woorden.org](https://www.woorden.org/)
->	- [Dutch Wiktionary](https://nl.wiktionary.org/) (planned, as backup)
-> For the translation:
-> - [Google Translate](https://translate.google.com/)
-> Pronunciation:
+> - [Woorden.org](https://www.woorden.org/)
+> - [Dutch Wiktionary](https://nl.wiktionary.org/) (planned, as backup) For >
+  > the translation:
+> - [Google Translate](https://translate.google.com/) Pronunciation:
 > - [Google Translate](https://translate.google.com/)
 
 ### Are you going to add more languages?

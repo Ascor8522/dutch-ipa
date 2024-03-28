@@ -1,7 +1,9 @@
 import { Word } from "./index.ts";
 import { IPAPronunciation } from "./ipa/index.ts";
 
-const kv = await Deno.openKv();
+const kvId = Deno.env.get("DENO_KV_ID");
+const kvUrl = kvId && Deno.env.get("DENO_KV_ACCESS_TOKEN") ? `https://api.deno.com/databases/${kvId}/connect` : undefined;
+const kv = await Deno.openKv(kvUrl);
 
 export const NotInKV = Symbol("NotInKV");
 export type NotInKV = typeof NotInKV;

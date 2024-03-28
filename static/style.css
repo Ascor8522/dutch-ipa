@@ -1,267 +1,306 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap");
+
 :root {
-  --one: #16161d;
-  --two: #28283e;
-  --three: #3785b9;
-  --four: #eeeeee;
-  --five: #9a9da5;
+	--one: #16161d;
+	--two: #28283e;
+	--three: #3785b9;
+	--four: #eeeeee;
+	--five: #9a9da5;
 }
+
 @media all and (prefers-color-scheme: dark) {
-  :root {
-    --background-color: var(--one);
-    --text-color: var(--four);
-    --toggle-button-enabled-background-color: var(--three);
-    --toggle-button-disabled-background-color: var(--two);
-    --toggle-button-slider-color: var(--four);
-    --button-color: var(--two);
-    --button-hover-color: var(--three);
-    --card-text-input-color: rgba(0, 0, 0, 0.1254901961);
-    --loading-skeleton-color: rgba(26, 26, 26, 0.1254901961);
-    --loading-skeleton-color-lighter: rgba(77, 77, 77, 0.1254901961);
-    --card-shadow: #000000;
-    --error-background-color: #ff000060;
-    --error-border-color: #ff0000;
-    --placeholder-text-color: var(--five);
-  }
+	:root {
+		--background-color: var(--one);
+		--text-color: var(--four);
+		--toggle-button-enabled-background-color: var(--three);
+		--toggle-button-disabled-background-color: var(--two);
+		--toggle-button-slider-color: var(--four);
+		--button-color: var(--two);
+		--button-hover-color: var(--three);
+		--card-text-input-color: rgba(0, 0, 0, 0.1254901961);
+		--loading-skeleton-color: rgba(26, 26, 26, 0.1254901961);
+		--loading-skeleton-color-lighter: rgba(77, 77, 77, 0.1254901961);
+		--card-shadow: #000000;
+		--error-background-color: #ff000060;
+		--error-border-color: #ff0000;
+		--placeholder-text-color: var(--five);
+	}
 }
+
 @media all and (prefers-color-scheme: light) {
-  :root {
-    --background-color: var(--four);
-    --text-color: var(--one);
-    --toggle-button-enabled-background-color: var(--three);
-    --toggle-button-disabled-background-color: var(--five);
-    --toggle-button-slider-color: var(--four);
-    --button-color: var(--five);
-    --button-hover-color: var(--three);
-    --card-text-input-color: rgba(0, 0, 0, 0.1254901961);
-    --loading-skeleton-color: rgba(0, 0, 0, 0.1254901961);
-    --loading-skeleton-color-lighter: rgba(0, 0, 0, 0.1254901961);
-    --card-shadow: #00000040;
-    --error-background-color: #ff000060;
-    --error-border-color: #ff0000;
-    --placeholder-text-color: var(--five);
-  }
+	:root {
+		--background-color: var(--four);
+		--text-color: var(--one);
+		--toggle-button-enabled-background-color: var(--three);
+		--toggle-button-disabled-background-color: var(--five);
+		--toggle-button-slider-color: var(--four);
+		--button-color: var(--five);
+		--button-hover-color: var(--three);
+		--card-text-input-color: rgba(0, 0, 0, 0.1254901961);
+		--loading-skeleton-color: rgba(0, 0, 0, 0.1254901961);
+		--loading-skeleton-color-lighter: rgba(0, 0, 0, 0.1254901961);
+		--card-shadow: #00000040;
+		--error-background-color: #ff000060;
+		--error-border-color: #ff0000;
+		--placeholder-text-color: var(--five);
+	}
 }
 
 html {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
 }
-html > body {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  font-family: "Roboto", sans-serif;
-  background-color: var(--background-color);
-  color: var(--text-color);
+
+html>body {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	font-family: "Roboto", sans-serif;
+	background-color: var(--background-color);
+	color: var(--text-color);
 }
-html > body > div.app {
-  width: 80%;
-  padding: 2rem 0;
-  min-height: calc(100% - 4rem);
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 4rem;
+
+html>body>div.app {
+	width: 80%;
+	padding: 2rem 0;
+	min-height: calc(100% - 4rem);
+	margin: auto;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 4rem;
 }
-html > body > div.app > div:not(.error) {
-  display: flex;
-  flex-direction: row;
-  gap: 1rem;
+
+html>body>div.app>div:not(.error) {
+	display: flex;
+	flex-direction: row;
+	gap: 1rem;
 }
+
 @media all and (max-width: 600px) {
-  html > body > div.app > div:not(.error) {
-    padding: 0 1.5rem;
-  }
+	html>body>div.app>div:not(.error) {
+		padding: 0 1.5rem;
+	}
 }
-html > body > div.app > div:not(.error) > label {
-  display: none;
+
+html>body>div.app>div:not(.error)>label {
+	display: none;
 }
-html > body > div.app > div:not(.error) > a > img {
-  height: 100%;
-  filter: contrast(0.5);
+
+html>body>div.app>div:not(.error)>a>img {
+	height: 100%;
+	filter: contrast(0.5);
 }
+
 @media all and (prefers-color-scheme: dark) {
-  html > body > div.app > div:not(.error) > a > img {
-    filter: invert(1) contrast(0.5);
-  }
+	html>body>div.app>div:not(.error)>a>img {
+		filter: invert(1) contrast(0.5);
+	}
 }
-html > body > div.app > div:not(.error) > h1 {
-  flex-grow: 1;
-  margin: 0;
+
+html>body>div.app>div:not(.error)>h1 {
+	flex-grow: 1;
+	margin: 0;
 }
+
 @media all and (max-width: 600px) {
-  html > body > div.app {
-    width: 100%;
-    justify-content: flex-start;
-    gap: 1rem;
-  }
+	html>body>div.app {
+		width: 100%;
+		justify-content: flex-start;
+		gap: 1rem;
+	}
 }
-html > body > div.app > div.error {
-  background-color: var(--error-background-color);
-  border: solid 1px var(--error-border-color);
-  padding: 1.5rem;
-  border-radius: 0.5rem;
-  text-align: center;
-  font-weight: bold;
+
+html>body>div.app>div.error {
+	background-color: var(--error-background-color);
+	border: solid 1px var(--error-border-color);
+	padding: 1.5rem;
+	border-radius: 0.5rem;
+	text-align: center;
+	font-weight: bold;
 }
-html > body > div.app > section.card {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  box-shadow: var(--card-shadow) 0 0 20px 0;
-  padding: 1.5rem;
-  border-radius: 0.5rem;
+
+html>body>div.app>section.card {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	box-shadow: var(--card-shadow) 0 0 20px 0;
+	padding: 1.5rem;
+	border-radius: 0.5rem;
 }
+
 @media all and (max-width: 600px) {
-  html > body > div.app > section.card {
-    border-radius: 0;
-  }
+	html>body>div.app>section.card {
+		border-radius: 0;
+	}
 }
-html > body > div.app > section.card nav {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 1rem;
-  justify-content: flex-end;
+
+html>body>div.app>section.card nav {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 1rem;
+	justify-content: flex-end;
 }
-html > body > div.app > section.card nav > h2 {
-  margin: 0;
-  flex-grow: 1;
-  font-size: 1.25rem;
+
+html>body>div.app>section.card nav>h2 {
+	margin: 0;
+	flex-grow: 1;
+	font-size: 1.25rem;
 }
-html > body > div.app > section.card nav > button {
-  position: relative;
-  cursor: pointer;
-  background-color: var(--button-color);
-  border: none;
-  border-radius: 0.5rem;
-  padding: 0.25rem;
-  transition: background-color 0.2s ease-in-out;
+
+html>body>div.app>section.card nav>button {
+	position: relative;
+	cursor: pointer;
+	background-color: var(--button-color);
+	border: none;
+	border-radius: 0.5rem;
+	padding: 0.25rem;
+	transition: background-color 0.2s ease-in-out;
 }
-html > body > div.app > section.card nav > button:disabled {
-  filter: brightness(0.7) grayscale(0.8) contrast(0.8);
+
+html>body>div.app>section.card nav>button:disabled {
+	filter: brightness(0.7) grayscale(0.8) contrast(0.8);
 }
-html > body > div.app > section.card nav > button:not(:disabled):hover {
-  background-color: var(--button-hover-color);
+
+html>body>div.app>section.card nav>button:not(:disabled):hover {
+	background-color: var(--button-hover-color);
 }
-html > body > div.app > section.card nav > button:not(:disabled):active {
-  top: 2px;
+
+html>body>div.app>section.card nav>button:not(:disabled):active {
+	top: 2px;
 }
-html > body > div.app > section.card nav > button > img {
-  filter: invert(1);
-  width: 1.5rem;
-  height: auto;
+
+html>body>div.app>section.card nav>button>img {
+	filter: invert(1);
+	width: 1.5rem;
+	height: auto;
 }
-html > body > div.app > section.card nav:nth-of-type(2) {
-  justify-content: end;
+
+html>body>div.app>section.card nav:nth-of-type(2) {
+	justify-content: end;
 }
-html > body > div.app > section.card > div {
-  display: flex;
-  flex-direction: row;
-  gap: 1rem;
+
+html>body>div.app>section.card>div {
+	display: flex;
+	flex-direction: row;
+	gap: 1rem;
 }
+
 @media all and (max-width: 600px) {
-  html > body > div.app > section.card > div {
-    flex-direction: column;
-  }
+	html>body>div.app>section.card>div {
+		flex-direction: column;
+	}
 }
-html > body > div.app > section.card > div > div.text-input {
-  display: block;
-  min-height: 1rem;
-  padding: 1rem;
-  cursor: text;
-  background-color: var(--card-text-input-color);
-  border-radius: 0.5rem;
-  flex-grow: 1;
-  font-size: 1.25rem;
+
+html>body>div.app>section.card>div>div.text-input {
+	display: block;
+	min-height: 1rem;
+	padding: 1rem;
+	cursor: text;
+	background-color: var(--card-text-input-color);
+	border-radius: 0.5rem;
+	flex-grow: 1;
+	font-size: 1.25rem;
 }
-html > body > div.app > section.card > div > div.text-input[contenteditable=true]:empty::before {
-  color: var(--placeholder-text-color);
-  font-size: 1rem;
-  content: "Enter text here...";
-  cursor: text;
+
+html>body>div.app>section.card>div>div.text-input[contenteditable=true]:empty::before {
+	color: var(--placeholder-text-color);
+	font-size: 1rem;
+	content: "Enter text here...";
+	cursor: text;
 }
 
 .is-loading {
-  background: linear-gradient(110deg, var(--loading-skeleton-color) 8%, var(--loading-skeleton-color-lighter) 18%, var(--loading-skeleton-color) 33%);
-  background-size: 200% 100%;
-  animation: 1.5s shine linear infinite;
+	background: linear-gradient(110deg, var(--loading-skeleton-color) 8%, var(--loading-skeleton-color-lighter) 18%, var(--loading-skeleton-color) 33%);
+	background-size: 200% 100%;
+	animation: 1.5s shine linear infinite;
 }
 
 label.toggle.switch {
-  position: relative;
-  display: inline-block;
-  width: 3rem;
-  height: 1.5rem;
+	position: relative;
+	display: inline-block;
+	width: 3rem;
+	height: 1.5rem;
 }
+
 label.toggle.switch:not(.disabled) {
-  cursor: pointer;
+	cursor: pointer;
 }
+
 label.toggle.switch:not(.disabled):hover {
-  filter: saturate(1.5) contrast(1.1);
+	filter: saturate(1.5) contrast(1.1);
 }
-label.toggle.switch.disabled > input + span {
-  filter: brightness(0.7) grayscale(0.8) contrast(0.8);
+
+label.toggle.switch.disabled>input+span {
+	filter: brightness(0.7) grayscale(0.8) contrast(0.8);
 }
-label.toggle.switch > input {
-  display: none;
+
+label.toggle.switch>input {
+	display: none;
 }
-label.toggle.switch > input:checked + span {
-  background-color: var(--toggle-button-enabled-background-color);
+
+label.toggle.switch>input:checked+span {
+	background-color: var(--toggle-button-enabled-background-color);
 }
-label.toggle.switch > input:checked + span:before {
-  transform: translateX(1.5rem);
+
+label.toggle.switch>input:checked+span:before {
+	transform: translateX(1.5rem);
 }
-label.toggle.switch > span {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: var(--toggle-button-disabled-background-color);
-  transition: 0.4s;
-  border-radius: 999px;
+
+label.toggle.switch>span {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: var(--toggle-button-disabled-background-color);
+	transition: 0.4s;
+	border-radius: 999px;
 }
-label.toggle.switch > span:before {
-  position: absolute;
-  content: "";
-  height: 1rem;
-  width: 1rem;
-  left: 0.25rem;
-  bottom: 0.25rem;
-  background-color: var(--toggle-button-slider-color);
-  transition: 0.4s;
-  border-radius: 999px;
+
+label.toggle.switch>span:before {
+	position: absolute;
+	content: "";
+	height: 1rem;
+	width: 1rem;
+	left: 0.25rem;
+	bottom: 0.25rem;
+	background-color: var(--toggle-button-slider-color);
+	transition: 0.4s;
+	border-radius: 999px;
 }
 
 label.toggle.arrow {
-  height: inherit;
-  width: auto;
+	height: inherit;
+	width: auto;
 }
+
 label.toggle.arrow img {
-  height: 100%;
-  width: auto;
+	height: 100%;
+	width: auto;
 }
+
 label.toggle.arrow:not(.disabled) {
-  cursor: pointer;
+	cursor: pointer;
 }
-label.toggle.arrow.disabled > input + span {
-  filter: brightness(0.7) grayscale(0.8) contrast(0.8);
+
+label.toggle.arrow.disabled>input+span {
+	filter: brightness(0.7) grayscale(0.8) contrast(0.8);
 }
-label.toggle.arrow > input {
-  display: none;
+
+label.toggle.arrow>input {
+	display: none;
 }
 
 @keyframes shine {
-  to {
-    background-position-x: -200%;
-  }
+	to {
+		background-position-x: -200%;
+	}
 }
 
 /*# sourceMappingURL=style.css.map */
