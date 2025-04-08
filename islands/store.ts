@@ -26,8 +26,7 @@ const sentenceToWords = (sentence: string): string[] =>
 		[];
 
 const fetchIPA = async () => {
-	let words = sentenceToWords(text.value);
-	words = [...new Set(words)];
+	const words = sentenceToWords(text.value);
 
 	if (!words.length) {
 		ipa.value = null;
@@ -43,7 +42,7 @@ const fetchIPA = async () => {
 			fetch("/api/ipa", {
 				method: "POST",
 				body: JSON.stringify({
-					words,
+					words: [...new Set(words)],
 					lang: "nl",
 				}),
 				signal: AbortSignal.timeout(2000),
