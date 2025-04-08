@@ -1,104 +1,93 @@
-import classnames from "classnames";
-import { Ref, useRef, useState } from "preact/hooks";
+import type { Signal } from "@preact/signals";
+import { clsx } from "clsx";
 
-import ToggleSwitch from "../components/toggle/ToggleSwitch.tsx";
+import ActionButton from "@components/ActionButton.tsx";
 
-export default ({ ...props }: CardProps & Copyable & Clearable & Pronounceable & Swappable) => {
-	const [isEnabled, setIsEnabled] = useState(!props.isClosed);
+export default (props: CardProps) => {
+	const { title, placeholder, onCopy } = props;
 
-	const displayedText =
-		props.error?.message ??
-		(props.isLoading ? "" : undefined) ??
-		props.text ??
-		"";
-	const textBox = useRef<HTMLDivElement>(null);
-	// textBox.current && window.getComputedStyle(textBox.current, ":empty::before").setProperty("content", props.placeholder ?? "Enter text here...");
-
-	const onCheckChanged = (checked: boolean) => setIsEnabled(checked);
-	const onInput = () => props.onTextChange?.(getText());
-	const onPaste = (e: ClipboardEvent) => {
-		e.preventDefault();
-		const text = e.clipboardData?.getData("text/plain")?.trim() ?? "";
-		document.execCommand("insertHTML", false, text);
-	};
-
-	const getText = () => textBox.current?.innerText ?? "";
-	const toggleEnabled = () => setIsEnabled(isEnabled => props.cannotBeDisabled ?? !isEnabled);
+	const isIPA = (props: CardProps): props is IPACardProps => props.type === "ipa";
+	const isInput = (props: CardProps): props is InputCardProps => props.type === "input";
 
 	return (
-		<section class="card">
-			<nav>
-				<ToggleSwitch
-					isChecked={props.cannotBeDisabled ?? isEnabled}
-					isDisabled={props.cannotBeDisabled}
-					onCheckChanged={onCheckChanged} />
-				<h2 onClick={toggleEnabled}>{props.title || ""}</h2>
+		<section class="flex flex-col gap-4 [box-shadow:black_0_0_20px_0] p-6 rounded-lg">
+			<nav class="flex flex-row flex-wrap items-center justify-end gap-4">
+				<h2 class="flex-grow text-2xl">{title}</h2>
 			</nav>
-			{
-				isEnabled && (
-					<div>
-						<div
-							class={classnames("text-input", { "is-loading": props.isLoading, "error": props.error })}
-							onInput={onInput}
-							contentEditable={!props.isReadonly}
-							autofocus={!props.isReadonly}
-							spellcheck={false}
-							onPaste={onPaste}
-							ref={textBox}>
-							{displayedText}
-						</div>
-						<nav>
-							{
-								([
-									[props.allowCopy, () => props.onCopy?.(getText()), "Copy", "/icons/content_copy.svg"],
-									[props.allowPronounce, () => props.onPronounce?.(getText()), "Pronounce", "/icons/volume_up.svg", true],
-									[props.allowSwap, () => props.onSwap?.(), "Swap", "/icons/swap_vert.svg", true],
-									[props.allowClear, () => props.onClear?.(textBox), "Clear", "/icons/close.svg"],
-								] as const)
-									.map(([allow, func, title, icon, disabled]) => (
-										allow && (
-											<button onClick={func} title={`${title} (coming)`} disabled={disabled}>
-												<img src={icon} alt={title} width="24px" height="24px" />
-											</button>
-										)
-									))
-							}
-						</nav>
+			<div class="flex flex-row gap-4">
+				{isInput(props) && (
+					<input
+						type="text"
+						placeholder={placeholder}
+						class="block min-h-4 p-4 cursor-text bg-[--card-input-bg] rounded-lg focus-visible:outline-[2px_solid] flex-grow text-xl"
+						onInput={(e) => props.onTextChange(e.currentTarget.value)}
+						autofocus
+						value={props.text}
+					/>
+				)}
+				{isIPA(props) && (
+					<div
+						class={clsx(
+							"block min-h-4 p-4 cursor-text bg-[--card-input-bg] rounded-lg flex-grow text-xl",
+							{ "animate-pulse": props.isLoading.value },
+							{ "text-red-500": props.error.value },
+						)}
+					>
+						{!props.ipa.value && (
+							<>
+								<span class="text-[#9ca3af]">{props.placeholder}</span>
+							</>
+						)}
+						{props.ipa.value?.map((ipa) => (
+							<span
+								key={ipa}
+								title={ipa ?? "🤔"}
+								class="p-1"
+							>
+								{ipa ?? "🤔"}
+							</span>
+						))}
 					</div>
-				)
-			}
+				)}
+				<nav class="contents">
+					<ActionButton
+						action={onCopy}
+						title="Copy"
+						iconSrc="/icons/content_copy.svg"
+					/>
+					{isInput(props) && (
+						<ActionButton
+							action={props.onClear}
+							title="Clear"
+							iconSrc="/icons/close.svg"
+						/>
+					)}
+				</nav>
+			</div>
 		</section>
 	);
 };
 
-export interface CardProps {
-	cannotBeDisabled?: true;
-	error?: Error | null;
-	isLoading?: boolean;
-	isClosed?: true;
-	isReadonly?: true;
-	onTextChange?: (text: string) => void;
-	text?: string;
-	title?: string;
-	placeholder?: string;
+interface BaseCardProps {
+	title: string;
+	placeholder: string;
+	onCopy: () => void;
 }
 
-export interface Copyable {
-	allowCopy?: true;
-	onCopy?: (text: string) => void;
+interface InputCardProps extends BaseCardProps {
+	type: "input";
+	text: Signal<string>;
+	onTextChange: (text: string) => void;
+	onClear: () => void;
 }
 
-export interface Clearable {
-	allowClear?: true;
-	onClear?: (div: Ref<HTMLDivElement>) => void;
+interface IPACardProps extends BaseCardProps {
+	type: "ipa";
+	isLoading: Signal<boolean>;
+	ipa: Signal<(string | null)[] | null>;
+	error: Signal<Error | null>;
 }
 
-export interface Pronounceable {
-	allowPronounce?: true;
-	onPronounce?: (text: string) => void;
-}
-
-export interface Swappable {
-	allowSwap?: true;
-	onSwap?: () => void;
-}
+type CardProps =
+	| InputCardProps
+	| IPACardProps;

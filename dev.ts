@@ -1,8 +1,8 @@
 #!/usr/bin/env -S deno run -A --watch=static/,routes/
 
 import dev from "$fresh/dev.ts";
-import { loadSync } from "dotenv";
+import config from "./fresh.config.ts";
 
-loadSync({ export: true });
+import "dotenv/load";
 
-await dev(import.meta.url, "./main.ts");
+await dev(import.meta.url, "./main.ts", config);

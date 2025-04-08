@@ -1,14 +1,17 @@
 /// <reference no-default-lib="true" />
 /// <reference lib="dom" />
+/// <reference lib="dom.iterable" />
 /// <reference lib="dom.asynciterable" />
 /// <reference lib="deno.ns" />
 /// <reference lib="deno.unstable" />
 
-import { start } from "$fresh/server.ts";
-import { DOMParser } from "deno_dom";
+// @ts-types="npm:@types/node"
+// @ts-types="npm:@types/underscore"
 
+import "dotenv/load";
+
+import { start } from "$fresh/server.ts";
+import config from "./fresh.config.ts";
 import manifest from "./fresh.gen.ts";
 
-export const domParser = new DOMParser();
-
-await start(manifest);
+await start(manifest, config);

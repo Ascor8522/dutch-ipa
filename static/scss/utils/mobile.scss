@@ -1,5 +1,0 @@
-@mixin onMobile() {
-	@media all and (max-width: 600px) {
-		@content;
-	}
-}

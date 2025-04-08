@@ -3,25 +3,31 @@
 // This file is automatically updated during development when running `dev.ts`.
 
 import * as $_404 from "./routes/_404.tsx";
+import * as $_500 from "./routes/_500.tsx";
 import * as $_app from "./routes/_app.tsx";
-import * as $api_index from "./routes/api/index.ts";
+import * as $api_ipa_index from "./routes/api/ipa/index.ts";
 import * as $index from "./routes/index.tsx";
+import * as $sitemap_xml from "./routes/sitemap.xml.ts";
 import * as $App from "./islands/App.tsx";
 import * as $Card from "./islands/Card.tsx";
-import { type Manifest } from "$fresh/server.ts";
+import * as $store from "./islands/store.ts";
+import type { Manifest } from "$fresh/server.ts";
 
 const manifest = {
-  routes: {
-    "./routes/_404.tsx": $_404,
-    "./routes/_app.tsx": $_app,
-    "./routes/api/index.ts": $api_index,
-    "./routes/index.tsx": $index,
-  },
-  islands: {
-    "./islands/App.tsx": $App,
-    "./islands/Card.tsx": $Card,
-  },
-  baseUrl: import.meta.url,
+	routes: {
+		"./routes/_404.tsx": $_404,
+		"./routes/_500.tsx": $_500,
+		"./routes/_app.tsx": $_app,
+		"./routes/api/ipa/index.ts": $api_ipa_index,
+		"./routes/index.tsx": $index,
+		"./routes/sitemap.xml.ts": $sitemap_xml,
+	},
+	islands: {
+		"./islands/App.tsx": $App,
+		"./islands/Card.tsx": $Card,
+		"./islands/store.ts": $store,
+	},
+	baseUrl: import.meta.url,
 } satisfies Manifest;
 
 export default manifest;

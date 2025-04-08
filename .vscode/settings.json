@@ -1,29 +1,21 @@
 {
-	"[xml]": {
-		"editor.defaultFormatter": "redhat.vscode-xml"
-	},
-	"[typescriptreact]": {
-		"editor.defaultFormatter": "denoland.vscode-deno"
-	},
-	"[typescript]": {
+	"[javascript]": {
 		"editor.defaultFormatter": "denoland.vscode-deno"
 	},
 	"[javascriptreact]": {
 		"editor.defaultFormatter": "denoland.vscode-deno"
 	},
-	"[javascript]": {
+	"[typescript]": {
 		"editor.defaultFormatter": "denoland.vscode-deno"
 	},
-	"cSpell.words": [
-		"asynciterable",
-		"deno",
-		"noredirect",
-		"Uitspraak",
-		"vitalets"
+	"[typescriptreact]": {
+		"editor.defaultFormatter": "denoland.vscode-deno"
+	},
+	"css.customData": [
+		".vscode/tailwind.json"
 	],
 	"deno.enable": true,
 	"deno.lint": true,
-	"deno.unstable": true,
-	"editor.defaultFormatter": "denoland.vscode-deno",
-	"typescript.tsserver.experimental.enableProjectDiagnostics": false
+	"deno.config": "deno.json",
+	"editor.defaultFormatter": "denoland.vscode-deno"
 }

@@ -1,7 +1,7 @@
 {
 	"lang": "en",
-	"theme_color": "#16161D",
-	"background_color": "#16161D",
+	"theme_color": "#F5B02B",
+	"background_color": "#F5B02B",
 	"display": "browser",
 	"scope": "/",
 	"start_url": "/",

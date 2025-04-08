@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@media (prefers-color-scheme: dark) {}
+
+@media (prefers-color-scheme: light) {}
+
+:root {
+	--color-primary-500: #16161d;
+	--button-bg: #8081a41c;
+	--button-hover: #8081a430;
+	--card-input-bg: #00000020;
+}
