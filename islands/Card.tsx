@@ -1,7 +1,7 @@
-import type { Signal } from "@preact/signals";
 import { clsx } from "clsx";
 
 import ActionButton from "@components/ActionButton.tsx";
+import { copy, error, ipa, isLoading, text } from "@islands/store.ts";
 
 export default (props: CardProps) => {
 	const { title, placeholder, onCopy } = props;
@@ -19,30 +19,31 @@ export default (props: CardProps) => {
 					<input
 						type="text"
 						placeholder={placeholder}
-						class="block min-h-4 p-4 cursor-text bg-[--card-input-bg] rounded-lg focus-visible:outline-[2px_solid] flex-grow text-xl"
-						onInput={(e) => props.onTextChange(e.currentTarget.value)}
+						class="block min-h-4 p-4 cursor-text bg-[--card-input-bg] rounded-lg focus-visible:outline-[2px_solid] flex-grow flex-shrink text-xl min-w-0"
+						onInput={(e) => text.value = e.currentTarget.value}
 						autofocus
-						value={props.text}
+						value={text}
 					/>
 				)}
 				{isIPA(props) && (
 					<div
 						class={clsx(
 							"block min-h-4 p-4 cursor-text bg-[--card-input-bg] rounded-lg flex-grow text-xl",
-							{ "animate-pulse": props.isLoading.value },
-							{ "text-red-500": props.error.value },
+							{ "animate-pulse": isLoading.value },
+							{ "text-red-500": error.value },
 						)}
 					>
-						{!props.ipa.value && (
+						{!ipa.value && (
 							<>
-								<span class="text-[#9ca3af]">{props.placeholder}</span>
+								<span class="text-[#9ca3af]">{placeholder}</span>
 							</>
 						)}
-						{props.ipa.value?.map((ipa) => (
+						{ipa.value?.map((ipa, i) => (
 							<span
-								key={ipa}
-								title={ipa ?? "🤔"}
-								class="p-1"
+								key={(ipa ?? "🤔") + i}
+								title={ipa ?? "Unknown IPA"}
+								class="p-1 hover:bg-[--word-hover] active:bg-[--word-active] rounded-md cursor-pointer"
+								onClick={() => ipa && copy(ipa)}
 							>
 								{ipa ?? "🤔"}
 							</span>
@@ -51,15 +52,17 @@ export default (props: CardProps) => {
 				)}
 				<nav class="contents">
 					<ActionButton
-						action={onCopy}
+						onClick={onCopy}
 						title="Copy"
 						iconSrc="/icons/content_copy.svg"
+						disabled={isInput(props) ? !text.value : !ipa.value}
 					/>
 					{isInput(props) && (
 						<ActionButton
-							action={props.onClear}
+							onClick={() => text.value = ""}
 							title="Clear"
 							iconSrc="/icons/close.svg"
+							disabled={isInput(props) ? !text.value : !ipa.value}
 						/>
 					)}
 				</nav>
@@ -76,16 +79,10 @@ interface BaseCardProps {
 
 interface InputCardProps extends BaseCardProps {
 	type: "input";
-	text: Signal<string>;
-	onTextChange: (text: string) => void;
-	onClear: () => void;
 }
 
 interface IPACardProps extends BaseCardProps {
 	type: "ipa";
-	isLoading: Signal<boolean>;
-	ipa: Signal<(string | null)[] | null>;
-	error: Signal<Error | null>;
 }
 
 type CardProps =

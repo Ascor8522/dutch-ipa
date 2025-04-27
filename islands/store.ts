@@ -2,21 +2,23 @@ import { batch, effect, signal } from "@preact/signals";
 import { debounce } from "async";
 
 export const text = signal("");
-export const setText = (newText: string) => {
-	if (newText === text.value) return;
-	text.value = newText;
+export const ipa = signal<(string | null)[] | null>(null);
+export const isLoading = signal(false);
+export const error = signal<Error | null>(null);
+
+export const copy = (text: string) => {
+	navigator.clipboard.writeText(text);
 };
 export const copyText = () => {
-	navigator.clipboard.writeText(text.value);
+	if (!text.value) return;
+	copy(text.value);
 	alert("Text copied to clipboard");
 };
-export const isLoading = signal(false);
-export const ipa = signal<(string | null)[] | null>(null);
 export const copyIPA = () => {
-	navigator.clipboard.writeText((ipa.value ?? []).join(" "));
+	if (!ipa.value) return;
+	copy((ipa.value ?? []).join(" "));
 	alert("IPA copied to clipboard");
 };
-export const error = signal<Error | null>(null);
 
 const sentenceToWords = (sentence: string): string[] =>
 	sentence

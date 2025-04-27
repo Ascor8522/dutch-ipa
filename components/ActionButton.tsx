@@ -1,10 +1,12 @@
-export default ({ action, title, iconSrc }: ActionButtonProps) => {
+import type { JSX } from "preact";
+
+export default ({ title, iconSrc, ...props }: ActionButtonProps) => {
 	return (
 		<button
+			{...props}
 			type="button"
-			onClick={action}
+			class="bg-[--button-bg] hover:bg-[--button-hover] active:bg-[--button-active] disabled:bg-[--button-disabled] relative cursor-pointer disabled:cursor-default rounded-lg m-auto p-2 transition-colors flex-shrink-0"
 			title={title}
-			class="bg-[--button-bg] hover:bg-[--button-hover] relative cursor-pointer rounded-lg m-auto p-2 transition-colors"
 		>
 			<img
 				src={iconSrc}
@@ -17,8 +19,6 @@ export default ({ action, title, iconSrc }: ActionButtonProps) => {
 	);
 };
 
-interface ActionButtonProps {
-	action: () => void;
-	title: string;
+interface ActionButtonProps extends JSX.ButtonHTMLAttributes {
 	iconSrc: string;
 }

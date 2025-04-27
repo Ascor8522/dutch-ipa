@@ -3,7 +3,7 @@ import App from "@islands/App.tsx";
 
 export default () => {
 	return (
-		<div class="w-4/5 min-h-[calc(100%-4rem)] py-8 m-auto flex flex-col justify-center gap-16">
+		<div class="w-11/12 sm:w-4/5 min-h-[calc(100%-4rem)] py-8 m-auto flex flex-col justify-center gap-16">
 			<div class="flex flex-row gap-4">
 				<img
 					src="/logo.svg"

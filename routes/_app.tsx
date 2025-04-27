@@ -73,7 +73,7 @@ gtag('config', '${GA_ID}', {});
 				<meta property="og:image:alt" content={iconDescription} />
 				<script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLD }} />
 			</head>
-			<body class="w-full h-full font-[Roboto] bg-[--color-primary-500] text-neutral-200">
+			<body class="w-full h-full font-[Roboto] bg-[--page-bg] text-neutral-200">
 				<Component />
 			</body>
 		</html>

@@ -1,0 +1,11 @@
+# TODO
+
+- IPA reference table/popover
+- corresponding words highlight
+- pronunciation audio
+
+## Performance
+
+- [ ] skip fetch when same words but different punctuation
+- [ ] skip fetch when same words but different case
+- [ ] use a local cache
