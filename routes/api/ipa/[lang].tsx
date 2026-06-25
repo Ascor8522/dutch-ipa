@@ -1,6 +1,6 @@
-import { serverSideEvents } from "@/routes/api/(_utils)/response.ts";
-import { ipaService } from "@/routes/api/ipa/(_service)/service.ts";
-import { define } from "../../../utils.ts";
+import {serverSideEvents} from "@/routes/api/(_utils)/response.ts";
+import {ipaService} from "@/routes/api/ipa/(_service)/service.ts";
+import {define} from "@/utils.ts";
 
 export const handler = define.handlers({
   GET(ctx) {
@@ -9,6 +9,8 @@ export const handler = define.handlers({
 
     const gen = ipaService.get(lang, words);
 
+    // return json(gen, (item) => item.word, (item) => item.ipa);
+    // return jsonl(gen);
     // return streaming(gen, ctx);
     return serverSideEvents(gen);
   },

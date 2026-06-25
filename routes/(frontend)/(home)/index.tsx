@@ -1,21 +1,16 @@
-import { TextInput } from "@/routes/(frontend)/(home)/(_islands)/text-input.tsx";
-import { define } from "../../../utils.ts";
+import {TextInput} from "@/routes/(frontend)/(home)/(_islands)/text-input.tsx";
+import {define} from "@/utils.ts";
 
 export default define.page(function Home() {
   return (
-    <div class="px-4 py-8 mx-auto fresh-gradient min-h-screen">
-      <div class="max-w-screen-md mx-auto flex flex-col items-center justify-center">
-        <img
-          class="my-6"
-          src="/logo.svg"
-          width="128"
-          height="128"
-          alt="the Fresh logo: a sliced lemon dripping with juice"
-        />
-        <h1 class="text-4xl font-bold">Welcome to Fresh 2</h1>
-        <p class="my-4">
-          Try updating this message in the
-          <code class="mx-2">./routes/index.tsx</code> file, and refresh.
+    <div class="min-h-screen bg-gray-950 px-4 py-10">
+      <div class="mx-auto flex max-w-screen-md flex-col items-center justify-center gap-6">
+        <h1 class="text-center text-4xl font-bold text-white">
+          Dutch IPA Transcriber
+        </h1>
+        <p class="text-center text-gray-300">
+          Enter a Dutch sentence and get the IPA transcription for the full
+          sentence.
         </p>
         <TextInput />
       </div>

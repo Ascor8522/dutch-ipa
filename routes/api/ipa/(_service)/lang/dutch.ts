@@ -1,8 +1,5 @@
-import { domParser } from "@/routes/api/(_utils)/dom.ts";
-import {
-  IPA_AVAILABLE,
-  IPA_NOT_AVAILABLE,
-} from "@/routes/api/ipa/(_service)/index.ts";
+import {domParser} from "@/routes/api/(_utils)/dom.ts";
+import * as IPA from "@/routes/api/ipa/(_service)/index.ts";
 
 const getIpa = (word: string) =>
   fetch(`https://www.woorden.org/woord/${word}`, {
@@ -16,9 +13,9 @@ const getIpa = (word: string) =>
     .then((document) =>
       (document.querySelector("table") ?? document.body)
         .innerText
-        .match(/Uitspraak:\s+\t?\[(.*?)\]/)
-        ?.[1] as IPA_AVAILABLE | undefined
+        .match(/Uitspraak:\s+\t?\[(.*?)]/)
+        ?.[1] as IPA.AVAILABLE | undefined
     )
-    .then((document) => document ?? IPA_NOT_AVAILABLE);
+    .then((document) => document ?? IPA.NOT_AVAILABLE);
 
 export default getIpa;

@@ -1,14 +1,16 @@
-export const IPA_NOT_AVAILABLE = Symbol("IPA_UNAVAILABLE");
-export const IPA_NOT_IN_KV = Symbol("NotInKV");
+export type WORD = string & { readonly brand: unique symbol };
+export type LANG = string & { readonly brand: unique symbol };
+export type AVAILABLE = string & { readonly brand: unique symbol };
+export type NOT_AVAILABLE = -1 & { readonly brand: unique symbol };
+export type NOT_IN_KV = -2 & { readonly brand: unique symbol };
 
-export type IPA_AVAILABLE = string & { readonly brand: unique symbol };
-export type IPA_NOT_AVAILABLE = typeof IPA_NOT_AVAILABLE;
-export type IPA_NOT_IN_KV = typeof IPA_NOT_IN_KV;
-
-export type IPA_IN_KV =
-  | IPA_AVAILABLE
-  | IPA_NOT_AVAILABLE;
+export type IN_KV =
+  | AVAILABLE
+  | NOT_AVAILABLE;
 
 export type IPA =
-  | IPA_IN_KV
-  | IPA_NOT_IN_KV;
+  | IN_KV
+  | NOT_IN_KV;
+
+export const NOT_AVAILABLE = -1 as NOT_AVAILABLE;
+export const NOT_IN_KV = -2 as NOT_IN_KV;

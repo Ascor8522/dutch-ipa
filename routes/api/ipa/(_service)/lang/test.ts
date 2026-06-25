@@ -1,9 +1,9 @@
-import { IPA_AVAILABLE } from "@/routes/api/ipa/(_service)/index.ts";
+import * as IPA from "@/routes/api/ipa/(_service)/index.ts";
 
 const getIpa = (word: string) =>
   wait(0)
     .then(() => console.log("ok", word))
-    .then(() => word as IPA_AVAILABLE);
+    .then(() => word as IPA.AVAILABLE);
 
 const wait = (timeout: number) =>
   new Promise((resolve) => setTimeout(resolve, timeout));
