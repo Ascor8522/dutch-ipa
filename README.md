@@ -1,98 +1,200 @@
-# Dutch-ipa
+Welcome to your new TanStack Start app!
 
-[![Made with Fresh](https://fresh.deno.dev/fresh-badge-dark.svg)](https://fresh.deno.dev)
+# Getting Started
 
-Try it now! [https://dutch-ipa.deno.dev/](https://dutch-ipa.deno.dev/)
+To run this application:
 
-A website that shows you the IPA transcription of a Dutch sentence.
+```bash
+pnpm install
+pnpm dev
+```
 
-![Screenshot - Dutch IPA](./.github/screenshot.png)
+# Building For Production
 
-## Features
+To build this application for production:
 
-- IPA transcription for every single word
-- Builtin IPA table, for reference, as well as example words, link to corresponding
-  Wiktionary page, etc.
-- Pronunciation of the whole sentence, as well as for every single word (planned)
-- Translation into English (planned, unsured tho)
+```bash
+pnpm build
+```
 
-## Installation
+## Styling
 
-1. Requirements:
+This project uses [Tailwind CSS](https://tailwindcss.com/) for styling.
 
-   - [Deno](https://deno.land/) (1.32+)
-   - an internet connection (for the backend to fetch the pronunciations)
+### Removing Tailwind CSS
 
-2. Clone the repository:
+If you prefer not to use Tailwind CSS:
 
-   ```bash
-   git clone https://github.com/Ascor8522/dutch-ipa.git
-   cd dutch-ipa
-   ```
+1. Remove the demo pages in `src/routes/demo/`
+2. Replace the Tailwind import in `src/styles.css` with your own styles
+3. Remove `tailwindcss()` from the plugins array in `vite.config.ts`
+4. Remove `@tailwindcss/vite` and `tailwindcss` from `package.json`
 
-3. Set the environment variables:
 
-   Copy the `.env.example` file to `.env` and fill in the required values.
+## Deploy to Cloudflare Workers
 
-   Leave the `DENO_KV_ACCESS_TOKEN` variable empty if you want to use your local
-   Deno KV database. This is recommended for development.
+This project uses the Cloudflare Vite plugin (configured in `vite.config.ts`) and `wrangler.jsonc`:
 
-## Usage
+1. Install Wrangler: `npm install -g wrangler`
+2. Authenticate: `wrangler login`
+3. Deploy: `npx wrangler deploy`
 
-### Development
+For production env vars, run `wrangler secret put MY_VAR` for each secret listed in `.env.example`. Public (non-secret) vars go in `wrangler.jsonc` under `vars`.
 
-1. Start the dev server:
+KV, D1, R2, and Durable Object bindings are configured in `wrangler.jsonc` — see https://developers.cloudflare.com/workers/wrangler/configuration/.
 
-   ```bash
-   deno task start
-   ```
 
-   This will watch the project directory and restart the dev server as necessary.
 
-### Production
+## Routing
 
-1. Build the project:
+This project uses [TanStack Router](https://tanstack.com/router) with file-based routing. Routes are managed as files in `src/routes`.
 
-   ```bash
-   deno task build
-   ```
+### Adding A Route
 
-   This will build the project and generate the routes.
+To add a new route to your application just add a new file in the `./src/routes` directory.
 
-2. Start the server:
+TanStack will automatically generate the content of the route file for you.
 
-   ```bash
-   deno run -A main.ts
-   ```
+Now that you have two routes you can use a `Link` component to navigate between them.
 
-## FAQ
+### Adding Links
 
-### There is sometimes a thinking emoji (🤔) in the IPA transcription
+To use SPA (Single Page Application) navigation you will need to import the `Link` component from `@tanstack/react-router`.
 
-> This means that no IPA transcription has been found for the corresponding word.
+```tsx
+import { Link } from "@tanstack/react-router";
+```
 
-### There are errors in the IPA transcription
+Then anywhere in your JSX you can use it like so:
 
-> This is because of how the source of data we use works.
-> When a verb is conjugated, or when a word is in its plural form,
-> the source redirects to the base form of the word.
->
-> I am aware of this and am working on a solution.
+```tsx
+<Link to="/about">About</Link>
+```
 
-### What source of data do you use?
+This will create a link that will navigate to the `/about` route.
 
-> For the IPA:
->
-> - Dutch:
-> - [Woorden.org](https://www.woorden.org/)
-> - [woordenlijst.org](https://www.woordenlijst.org/) (planned)
-> - [Dutch Wiktionary](https://nl.wiktionary.org/) (planned, as backup)
-> For the translation:
-> - [Google Translate](https://translate.google.com/)
-> For the Pronunciation:
-> - [Google Translate](https://translate.google.com/)
+More information on the `Link` component can be found in the [Link documentation](https://tanstack.com/router/v1/docs/framework/react/api/router/linkComponent).
 
-### Are you going to add more languages?
+### Using A Layout
 
-> No, this project was mainly made for Dutch; tho it is technically possible
-> and quite easy to add more languages.
+In the File Based Routing setup the layout is located in `src/routes/__root.tsx`. Anything you add to the root route will appear in all the routes. The route content will appear in the JSX where you render `{children}` in the `shellComponent`.
+
+Here is an example layout that includes a header:
+
+```tsx
+import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
+
+export const Route = createRootRoute({
+  head: () => ({
+    meta: [
+      { charSet: 'utf-8' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { title: 'My App' },
+    ],
+  }),
+  shellComponent: ({ children }) => (
+    <html lang="en">
+      <head>
+        <HeadContent />
+      </head>
+      <body>
+        <header>
+          <nav>
+            <Link to="/">Home</Link>
+            <Link to="/about">About</Link>
+          </nav>
+        </header>
+        {children}
+        <Scripts />
+      </body>
+    </html>
+  ),
+})
+```
+
+More information on layouts can be found in the [Layouts documentation](https://tanstack.com/router/latest/docs/framework/react/guide/routing-concepts#layouts).
+
+## Server Functions
+
+TanStack Start provides server functions that allow you to write server-side code that seamlessly integrates with your client components.
+
+```tsx
+import { createServerFn } from '@tanstack/react-start'
+
+const getServerTime = createServerFn({
+  method: 'GET',
+}).handler(async () => {
+  return new Date().toISOString()
+})
+
+// Use in a component
+function MyComponent() {
+  const [time, setTime] = useState('')
+  
+  useEffect(() => {
+    getServerTime().then(setTime)
+  }, [])
+  
+  return <div>Server time: {time}</div>
+}
+```
+
+## API Routes
+
+You can create API routes by using the `server` property in your route definitions:
+
+```tsx
+import { createFileRoute } from '@tanstack/react-router'
+import { json } from '@tanstack/react-start'
+
+export const Route = createFileRoute('/api/hello')({
+  server: {
+    handlers: {
+      GET: () => json({ message: 'Hello, World!' }),
+    },
+  },
+})
+```
+
+## Data Fetching
+
+There are multiple ways to fetch data in your application. You can use TanStack Query to fetch data from a server. But you can also use the `loader` functionality built into TanStack Router to load the data for a route before it's rendered.
+
+For example:
+
+```tsx
+import { createFileRoute } from '@tanstack/react-router'
+
+export const Route = createFileRoute('/people')({
+  loader: async () => {
+    const response = await fetch('https://swapi.dev/api/people')
+    return response.json()
+  },
+  component: PeopleComponent,
+})
+
+function PeopleComponent() {
+  const data = Route.useLoaderData()
+  return (
+    <ul>
+      {data.results.map((person) => (
+        <li key={person.name}>{person.name}</li>
+      ))}
+    </ul>
+  )
+}
+```
+
+Loaders simplify your data fetching logic dramatically. Check out more information in the [Loader documentation](https://tanstack.com/router/latest/docs/framework/react/guide/data-loading#loader-parameters).
+
+
+# Demo files
+
+Files prefixed with `demo` can be safely deleted. They are there to provide a starting point for you to play around with the features you've installed.
+
+
+# Learn More
+
+You can learn more about all of the offerings from TanStack in the [TanStack documentation](https://tanstack.com).
+
+For TanStack Start specific documentation, visit [TanStack Start](https://tanstack.com/start).

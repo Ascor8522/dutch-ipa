@@ -1,13 +1,13 @@
-# dotenv environment variable files
+node_modules
+.DS_Store
+dist
+dist-ssr
+*.local
 .env
-.env.development.local
-.env.test.local
-.env.production.local
-.env.local
-
-# Fresh build directory
-_fresh/
-# npm dependencies
-node_modules/
-
-.idea/
+.nitro
+.tanstack
+.wrangler
+.output
+.vinxi
+__unconfig*
+todos.json

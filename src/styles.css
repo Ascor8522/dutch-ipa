@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+.ipa-chip {
+	anchor-name: var(--ipa-anchor);
+}
+
+.ipa-chip-tooltip {
+	position: fixed;
+	position-anchor: var(--ipa-anchor);
+	position-area: top;
+	position-try-fallbacks: flip-block;
+	margin: 0 0 0.5rem;
+	inset: auto;
+}
+
+.ipa-info-button {
+	anchor-name: --ipa-info-anchor;
+}
+
+.ipa-info-tooltip {
+	position: fixed;
+	position-anchor: --ipa-info-anchor;
+	position-area: right;
+	position-try-fallbacks: flip-block;
+	margin: 0 0 0 0.5rem;
+	inset: auto;
+}

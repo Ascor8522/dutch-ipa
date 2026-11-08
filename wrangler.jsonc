@@ -1,0 +1,19 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "dutch-ipa",
+	"compatibility_date": "2026-11-07",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"main": "@tanstack/react-start/server-entry",
+	"observability": {
+		"enabled": true,
+	},
+	"kv_namespaces": [
+		{
+			"binding": "KV",
+			"id": "57271b5fa82d44899762467ea5f82d0f",
+			"remote": true
+		}
+	]
+}
