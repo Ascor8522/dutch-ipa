@@ -26,12 +26,18 @@ function tokenizeSentence(sentence: string): SentenceToken[] {
 	}));
 }
 
+function normalizeWord(word: string) {
+	return word.toLocaleLowerCase('nl');
+}
+
 function App() {
 	const [sentence, setSentence] = useState<string>("");
 	const [ipaStore, setIpaStore] = useState<Record<string, string | null>>({});
 	const tokens = useMemo(() => tokenizeSentence(sentence), [sentence]);
 	const words = useMemo(
-		() => tokens.filter((token) => token.type === 'word').map((token) => token.text),
+		() => tokens
+			.filter((token) => token.type === 'word')
+			.map((token) => normalizeWord(token.text)),
 		[tokens],
 	);
 
@@ -39,7 +45,9 @@ function App() {
 		const unknownWords = [...new Set(words.filter((word) => ipaStore[word] === undefined))];
 		if(!unknownWords.length) return;
 		const res = await getIpaForWords({ data: unknownWords });
-		for await(const val of res.values()) setIpaStore((current) => ({ ...current, [val.word]: val.value }));
+		for await(const val of res.values()) {
+			setIpaStore((current) => ({ ...current, [normalizeWord(val.word)]: val.value }));
+		}
 	}, [words, ipaStore]);
 
 	const debouncedSetSentence = debounce(setSentence, 1000);
@@ -55,7 +63,9 @@ function App() {
 
 	const copyIpa = async () => {
 		const transcription = tokens
-			.map((token) => token.type === 'word' ? ipaStore[token.text] ?? '🤔' : token.text)
+			.map((token) => token.type === 'word'
+				? ipaStore[normalizeWord(token.text)] ?? '🤔'
+				: token.text)
 			.join('');
 		await navigator.clipboard.writeText(transcription);
 	};
@@ -155,14 +165,14 @@ function App() {
 					</div>
 
 					<div
-						className="min-h-20 whitespace-pre-wrap break-words rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-3 font-mono text-lg text-zinc-900 dark:border-zinc-600 dark:bg-zinc-950 dark:text-zinc-100"
+						className="min-h-20 whitespace-pre-wrap break-words rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-3 font-mono text-lg leading-10 text-zinc-900 dark:border-zinc-600 dark:bg-zinc-950 dark:text-zinc-100"
 						aria-live="polite"
 					>
 						{!!tokens.filter(token => token.type === 'word').length ? (
-							tokens.map((token, index) => token.type === 'word' ? (
-								<IpaChip
-									key={`${index}-${token.text}`}
-									ipa={ipaStore[token.text] ?? null}
+				tokens.map((token, index) => token.type === 'word' ? (
+					<IpaChip
+						key={`${index}-${token.text}`}
+						ipa={ipaStore[normalizeWord(token.text)] ?? null}
 									word={token.text}
 								/>
 							) : (

@@ -11,7 +11,10 @@ function validateWords(data: unknown) {
 	if(!Array.isArray(data)) throw new Error("Expected an array");
 	if(data.some((word) => typeof word !== 'string')) throw new Error("Expected an array of strings");
 
-	return data as string[];
+	return (data as string[])
+		.map(word => word.trim())
+		.map(word => word.toLowerCase())
+		.filter(word => word.length > 0);
 }
 
 export const getIpaForWords = createServerFn({ method: 'POST' })

@@ -23,7 +23,7 @@ export default function IpaChip({ ipa, word }: IpaChipProps) {
 
 	return (
 		<span
-			className="ipa-chip inline-flex rounded-md border border-zinc-300 bg-white px-2 py-1 dark:border-zinc-600 dark:bg-zinc-900"
+			className="ipa-chip inline-flex leading-6 rounded-md border border-zinc-300 bg-white px-2 py-1 dark:border-zinc-600 dark:bg-zinc-900"
 			style={{ '--ipa-anchor': anchorName } as React.CSSProperties}
 			tabIndex={0}
 			aria-describedby={tooltipId}
