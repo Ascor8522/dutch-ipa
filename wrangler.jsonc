@@ -7,7 +7,13 @@
 	],
 	"main": "@tanstack/react-start/server-entry",
 	"observability": {
-		"enabled": true
+		"logs": {
+			"enabled": true,
+			"invocation_logs": true
+		},
+		"traces": {
+			"enabled": true
+		}
 	},
 	"workers_dev": true,
 	"preview_urls": false,
@@ -17,5 +23,5 @@
 			"id": "57271b5fa82d44899762467ea5f82d0f",
 			"remote": true
 		}
-	]
+	],
 }
